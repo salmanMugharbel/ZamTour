@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZamTour | Almaty Luxury Travel</title>
+    
+    <!-- FAVICON -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 60'%3E%3Cpath d='M5 55 L28 32 L38 42 L50 12 L62 42 L72 32 L95 55' fill='none' stroke='%23D4AF37' stroke-width='6' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Iconify -->
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Kufi+Arabic:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        arabic: ['Noto Kufi Arabic', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#1B1464',
+                            light: '#0652DD',
+                        },
+                        gold: {
+                            300: '#F5D76E',
+                            400: '#F4C430',
+                            500: '#D4AF37',
+                            600: '#AA8C2C',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Settings */
+        body {
+            background: linear-gradient(135deg, #1B1464 0%, #0652DD 100%);
+            background-attachment: fixed;
+            color: #f0f4f8;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1B1464; }
+        ::-webkit-scrollbar-thumb { background: #0652DD; border-radius: 4px; border: 1px solid #1B1464; }
+        ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
+
+        /* Spotlight Effect CSS Logic */
+        .spotlight-wrapper {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1px;
+            overflow: hidden;
+        }
+        .spotlight-wrapper::before {
+            content: '';
+            position: absolute;
+            height: 100%; width: 100%; top: 0; left: 0;
+            background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(212, 175, 55, 0.6), transparent 40%);
+            opacity: 0; transition: opacity 0.5s; z-index: 1;
+        }
+        .spotlight-wrapper:hover::before { opacity: 1; }
+        
+        .spotlight-content {
+            position: relative; z-index: 10;
+            background: rgba(27, 20, 100, 0.9);
+            backdrop-filter: blur(12px);
+            height: 100%;
+        }
+
+        /* Scroll Animations */
+        .animate-on-scroll {
+            opacity: 0; filter: blur(10px); transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .animate-on-scroll.is-visible { opacity: 1; filter: blur(0); transform: translateY(0); }
+
+        /* Mobile Menu */
+        #mobile-menu { transition: opacity 0.3s ease-in-out, visibility 0.3s; }
+        #mobile-menu.hidden-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        #mobile-menu.visible-menu { opacity: 1; visibility: visible; pointer-events: auto; }
+
+        /* Input No Spinners */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; margin: 0; 
+        }
+        
+        .premium-border {
+            background: linear-gradient(135deg, #D4AF37, #F5D76E, #D4AF37);
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.1/",
+    "react": "https://aistudiocdn.com/react@^19.2.1",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.10.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+    <div id="root"></div>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
