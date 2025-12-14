@@ -1,12 +1,13 @@
 
 import React from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../LanguageContext';
 import { useData } from '../DataContext';
 
 const MyPackage: React.FC = () => {
     const { t, isRTL } = useLanguage();
     const { packages } = useData();
+    const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id') || 'coup_prem'; // Default fallback
 
@@ -37,7 +38,10 @@ const MyPackage: React.FC = () => {
                             <div className={`w-full md:w-1/4 bg-white/5 p-8 flex flex-col justify-center items-center border-b md:border-b-0 ${isRTL ? 'md:border-l' : 'md:border-r'} border-white/10 text-center`}>
                                 <span className="text-gray-400 text-sm font-semibold uppercase tracking-wider mb-2">{t.my_package.total_price}</span>
                                 <div className="text-4xl font-extrabold text-white mb-6">${pkg.price}</div>
-                                <button className="w-full bg-gold-400 text-[#1B1464] py-3 rounded-xl font-bold hover:bg-white transition-all shadow-lg">
+                                <button
+                                    onClick={() => navigate(`/payment?id=${pkg.id}`)}
+                                    className="w-full bg-gold-400 text-[#1B1464] py-3 rounded-xl font-bold hover:bg-white transition-all shadow-lg"
+                                >
                                     {t.my_package.book_now}
                                 </button>
                                 <p className="text-[10px] text-gray-500 mt-3">{pkg.cancellationPolicy}</p>

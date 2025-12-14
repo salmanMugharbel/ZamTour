@@ -12,6 +12,7 @@ import About from './pages/About';
 import Admin from './pages/Admin';
 import { LanguageProvider, useLanguage } from './LanguageContext';
 import { DataProvider } from './DataContext';
+import Payment from './pages/Payment';
 
 const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -55,9 +56,9 @@ const AppContent: React.FC = () => {
         }, 100);
 
         const mutationObserver = new MutationObserver(() => {
-             document.querySelectorAll('.animate-on-scroll:not(.is-visible)').forEach(el => observer.observe(el));
+            document.querySelectorAll('.animate-on-scroll:not(.is-visible)').forEach(el => observer.observe(el));
         });
-        
+
         mutationObserver.observe(document.body, { childList: true, subtree: true });
 
         return () => {
@@ -78,6 +79,7 @@ const AppContent: React.FC = () => {
                     <Route path="/my-package" element={<MyPackage />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/admin" element={<Admin />} />
+                    <Route path="/payment" element={<Payment />} />
                 </Routes>
             </div>
             <Footer />
