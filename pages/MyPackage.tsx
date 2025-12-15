@@ -44,7 +44,7 @@ const MyPackage: React.FC = () => {
                                 >
                                     {t.my_package.book_now}
                                 </button>
-                                <p className="text-[10px] text-gray-500 mt-3">{pkg.cancellationPolicy}</p>
+                                <p className="text-[10px] text-gray-500 mt-3">{t.my_package.cancellation}</p>
                             </div>
 
                             {/* Middle: Inclusions */}
@@ -53,17 +53,31 @@ const MyPackage: React.FC = () => {
                                     <span className="iconify text-gold-400" data-icon="solar:star-bold"></span> {t.my_package.includes_title}
                                 </h3>
                                 <div className="grid grid-cols-2 gap-y-6 gap-x-4">
-                                    {pkg.inclusions.map((inc, i) => (
-                                        <div key={i} className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
-                                                <span className="iconify w-6 h-6" data-icon={inc.icon}></span>
+                                    {pkg.inclusions.map((inc, i) => {
+                                        // Mapping hardcoded icons/titles to translations
+                                        // Order of inclusions in pkg.inclusions matches the translation keys somewhat
+                                        // But safer to map by index or just use the structure if it's consistent
+                                        // Assuming standard inclusions logic:
+                                        // 0: sim, 1: tours, 2: transfers, 3: stay
+                                        const keys = ['sim', 'tours', 'transfers', 'stay'];
+                                        const key = keys[i];
+                                        // @ts-ignore
+                                        const title = t.my_package.includes[key];
+                                        // @ts-ignore
+                                        const desc = t.my_package.includes[`${key}_desc`];
+
+                                        return (
+                                            <div key={i} className="flex items-center gap-3">
+                                                <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+                                                    <span className="iconify w-6 h-6" data-icon={inc.icon}></span>
+                                                </div>
+                                                <div>
+                                                    <p className="text-white font-bold text-sm">{title || inc.title}</p>
+                                                    <p className="text-[10px] text-gray-400">{desc || inc.desc}</p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p className="text-white font-bold text-sm">{inc.title}</p>
-                                                <p className="text-[10px] text-gray-400">{inc.desc}</p>
-                                            </div>
-                                        </div>
-                                    ))}
+                                        );
+                                    })}
                                 </div>
                             </div>
 
@@ -82,37 +96,50 @@ const MyPackage: React.FC = () => {
 
                 <div className="space-y-0 relative">
 
-                    {pkg.itinerary.map((day, i) => (
-                        <div key={i} className={`relative ${isRTL ? 'pr-16' : 'pl-16'} pb-12 group animate-on-scroll`}>
-                            <div className={`absolute ${isRTL ? 'right-6' : 'left-6'} top-10 bottom-[-20px] w-0.5 bg-white/10 z-0`}></div>
-                            <div className={`absolute ${isRTL ? 'right-0' : 'left-0'} top-0 w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white border-4 border-[#1B1464] z-10 shadow-lg`}>
-                                <span className="iconify w-6 h-6" data-icon="solar:calendar-mark-bold"></span>
-                            </div>
+                    {pkg.itinerary.map((day, i) => {
+                        // @ts-ignore
+                        const dayData = t.my_package.days[`day${i + 1}_title`] ? {
+                            // @ts-ignore
+                            title: t.my_package.days[`day${i + 1}_title`],
+                            // @ts-ignore
+                            sub: t.my_package.days[`day${i + 1}_sub`],
+                            // @ts-ignore
+                            desc: t.my_package.days[`day${i + 1}_desc`]
+                        } : day;
 
-                            <div className="spotlight-wrapper rounded-2xl p-[1px]">
-                                <div className="spotlight-content rounded-2xl p-6 bg-[#1B1464]/60">
-                                    <div className="flex justify-between items-start mb-2">
-                                        <h3 className="text-lg font-bold text-white">{day.title}</h3>
-                                        <span className="text-xs text-gray-400">{day.subtitle}</span>
-                                    </div>
-                                    <p className="text-sm text-gray-300 mb-4 leading-relaxed">
-                                        {day.desc}
-                                    </p>
-                                    <div className="flex gap-4 border-t border-white/10 pt-4 text-xs text-gray-400">
-                                        {day.activities.map((act, j) => {
-                                            const [icon, text] = act.split('|');
-                                            return (
-                                                <div key={j} className="flex items-center gap-1">
-                                                    {icon && <span className="iconify text-green-400" data-icon={icon}></span>}
-                                                    {text}
-                                                </div>
-                                            );
-                                        })}
+                        return (
+                            <div key={i} className={`relative ${isRTL ? 'pr-16' : 'pl-16'} pb-12 group animate-on-scroll`}>
+                                <div className={`absolute ${isRTL ? 'right-6' : 'left-6'} top-10 bottom-[-20px] w-0.5 bg-white/10 z-0`}></div>
+                                <div className={`absolute ${isRTL ? 'right-0' : 'left-0'} top-0 w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white border-4 border-[#1B1464] z-10 shadow-lg`}>
+                                    <span className="iconify w-6 h-6" data-icon="solar:calendar-mark-bold"></span>
+                                </div>
+
+                                <div className="spotlight-wrapper rounded-2xl p-[1px]">
+                                    <div className="spotlight-content rounded-2xl p-6 bg-[#1B1464]/60">
+                                        <div className="flex justify-between items-start mb-2">
+                                            <h3 className="text-lg font-bold text-white">{dayData.title || day.title}</h3>
+                                            <span className="text-xs text-gray-400">{dayData.sub || day.subtitle}</span>
+                                        </div>
+                                        <p className="text-sm text-gray-300 mb-4 leading-relaxed">
+                                            {dayData.desc || day.desc}
+                                        </p>
+                                        <div className="flex gap-4 border-t border-white/10 pt-4 text-xs text-gray-400">
+                                            {day.activities.map((act, j) => {
+                                                const [icon, text] = act.split('|');
+                                                // Ideally translate activities too, but for now just text
+                                                return (
+                                                    <div key={j} className="flex items-center gap-1">
+                                                        {icon && <span className="iconify text-green-400" data-icon={icon}></span>}
+                                                        {text}
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
 
                 </div>
 

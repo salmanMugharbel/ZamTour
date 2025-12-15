@@ -42,9 +42,8 @@ const Footer: React.FC = () => {
             <div className="max-w-7xl mx-auto px-6 border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-blue-300/60">
                 <p>{t.footer.rights}</p>
                 <div className="flex gap-1 items-center">
-                    <span>{t.footer.made_by}</span>
-                    <a href="https://wa.me/77075257841" className="hover:text-gold-400 transition-colors font-bold underline flex items-center gap-1">
-                        {t.footer.write_me}
+                    <a href="https://wa.me/77075257841" className="hover:text-gold-400 transition-colors font-bold flex items-center gap-1">
+                        {t.footer.made_by} <span className="text-base">✌😎😁</span>
                     </a>
                 </div>
             </div>

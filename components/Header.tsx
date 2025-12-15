@@ -48,9 +48,10 @@ const Header: React.FC = () => {
                             <button className="flex items-center gap-1 text-gray-300 hover:text-white text-xs font-medium transition-colors uppercase">
                                 <span>{language}</span><span className="iconify w-3 h-3" data-icon="solar:alt-arrow-down-bold"></span>
                             </button>
-                            <div className={`absolute top-full mt-4 w-32 bg-[#1B1464] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform ${isRTL ? 'left-0 origin-top-left' : 'right-0 origin-top-right'}`}>
+                            <div className={`absolute top-full mt-4 w-40 bg-[#1B1464] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform ${isRTL ? 'left-0 origin-top-left' : 'right-0 origin-top-right'}`}>
                                 <button onClick={() => handleLanguageChange('en')} className="block w-full text-start px-4 py-2 text-sm text-white hover:text-gold-400 hover:bg-white/5 first:rounded-t-xl">English</button>
                                 <button onClick={() => handleLanguageChange('ru')} className="block w-full text-start px-4 py-2 text-sm text-white hover:text-gold-400 hover:bg-white/5">Russian</button>
+                                <button onClick={() => handleLanguageChange('kk')} className="block w-full text-start px-4 py-2 text-sm text-white hover:text-gold-400 hover:bg-white/5">Қазақша</button>
                                 <button onClick={() => handleLanguageChange('ar')} className="block w-full text-start px-4 py-2 text-sm text-white hover:text-gold-400 font-arabic hover:bg-white/5 last:rounded-b-xl">العربية</button>
                             </div>
                         </div>
@@ -81,6 +82,7 @@ const Header: React.FC = () => {
                     <div className="flex gap-4 mt-4">
                         <button onClick={() => { handleLanguageChange('en'); toggleMenu(); }} className={`px-4 py-2 rounded-full border ${language === 'en' ? 'bg-gold-400 text-[#1B1464] border-gold-400' : 'text-white border-white/20'}`}>EN</button>
                         <button onClick={() => { handleLanguageChange('ru'); toggleMenu(); }} className={`px-4 py-2 rounded-full border ${language === 'ru' ? 'bg-gold-400 text-[#1B1464] border-gold-400' : 'text-white border-white/20'}`}>RU</button>
+                        <button onClick={() => { handleLanguageChange('kk'); toggleMenu(); }} className={`px-4 py-2 rounded-full border ${language === 'kk' ? 'bg-gold-400 text-[#1B1464] border-gold-400' : 'text-white border-white/20'}`}>KK</button>
                         <button onClick={() => { handleLanguageChange('ar'); toggleMenu(); }} className={`px-4 py-2 rounded-full border font-arabic ${language === 'ar' ? 'bg-gold-400 text-[#1B1464] border-gold-400' : 'text-white border-white/20'}`}>عربي</button>
                     </div>
                 </nav>

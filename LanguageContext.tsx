@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { translations } from './translations';
 
-export type Language = 'en' | 'ru' | 'ar';
+export type Language = 'en' | 'ru' | 'ar' | 'kk';
 type Translations = typeof translations.en;
 
 interface LanguageContextType {

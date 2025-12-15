@@ -25,7 +25,7 @@ const Explore: React.FC = () => {
     const categories = [
         { id: 'All', name: t.explore.all_places, icon: 'solar:stars-minimalistic-bold' },
         { id: 'Essentials', name: t.explore.essentials, icon: 'solar:star-bold' },
-        { id: 'Outdoors', name: t.explore.outdoors, icon: 'solar:mountains-bold' },
+        { id: 'Nature', name: t.explore.outdoors, icon: 'solar:mountains-bold' },
         { id: 'Shopping', name: t.explore.shopping, icon: 'solar:bag-heart-bold' },
         { id: 'Culture', name: t.explore.culture, icon: 'solar:gallery-bold' },
     ];
@@ -124,6 +124,7 @@ const Explore: React.FC = () => {
                         {filteredDestinations.map(place => {
                             // @ts-ignore
                             const placeName = t.places_data[place.id]?.name || place.name;
+                            const catKey = place.cat.toLowerCase() === 'nature' ? 'outdoors' : place.cat.toLowerCase();
 
                             return (
                                 <div key={place.id} onClick={() => navigate(`/place-details?id=${place.id}`)} className="spotlight-wrapper rounded-[1.5rem] p-[1px] group cursor-pointer h-full animate-on-scroll">
@@ -139,8 +140,8 @@ const Explore: React.FC = () => {
                                                 <span className="iconify" data-icon="solar:heart-linear"></span>
                                             </button>
                                             <div className="absolute bottom-3 left-3 bg-[#1B1464]/80 backdrop-blur px-2 py-1 rounded text-[10px] text-gold-400 font-bold uppercase tracking-wider border border-gold-400/20">
-                                                {/* @ts-ignore - Simple dynamic check for category translation or fallback */}
-                                                {t.explore[place.cat.toLowerCase()] || place.cat}
+                                                {/* @ts-ignore */}
+                                                {t.explore[catKey] || place.cat}
                                             </div>
                                         </div>
                                         <div className="p-5 flex-1 flex flex-col justify-between">

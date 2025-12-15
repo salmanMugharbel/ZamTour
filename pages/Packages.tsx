@@ -36,15 +36,36 @@ const Packages: React.FC = () => {
                             <div className={`spotlight-content p-8 flex flex-col h-full ${pkg.tier === 'premium' ? 'bg-gradient-to-b from-[#2a2455] to-[#1B1464]' : 'bg-[#1B1464]/90'}`}>
                                 <div className={`mb-4 text-xs font-bold uppercase tracking-widest flex items-center gap-2 ${pkg.tier === 'premium' ? 'text-gold-400' : 'text-gray-400'}`}>
                                     {pkg.tier === 'premium' && <span className="iconify" data-icon="solar:crown-star-bold"></span>}
-                                    {pkg.subtitle}
+                                    {/* @ts-ignore */}
+                                    {t.packages[pkg.type === 'couples' && pkg.tier === 'premium' ? 'vip' :
+                                        pkg.type === 'couples' ? 'couples' :
+                                            pkg.type === 'family' && pkg.tier === 'premium' ? 'family' :
+                                                pkg.type === 'family' ? 'family' :
+                                                    pkg.type === 'friends' ? 'friends' : 'standard']}
                                 </div>
-                                <h3 className="text-2xl font-bold text-white mb-6">{pkg.title}</h3>
+                                <h3 className="text-2xl font-bold text-white mb-6">
+                                    {/* @ts-ignore */}
+                                    {t.packages[`${pkg.type}_${pkg.tier === 'premium' ? 'prem_' : ''}title`]}
+                                </h3>
                                 <ul className="space-y-4 mb-8 flex-1">
-                                    {pkg.features.map((feat, i) => (
-                                        <li key={i} className={`flex items-start gap-3 text-sm ${pkg.tier === 'premium' ? 'text-white' : 'text-gray-300'}`}>
-                                            <span className={`iconify mt-0.5 text-lg ${pkg.tier === 'premium' ? 'text-gold-400' : 'text-gold-400'}`} data-icon={pkg.tier === 'premium' ? "solar:star-bold-duotone" : "solar:check-circle-bold-duotone"}></span> {feat}
-                                        </li>
-                                    ))}
+                                    {pkg.features.map((feat, i) => {
+                                        // Construct translation key based on package type and tier/index
+                                        // Simplified mapping logic:
+                                        // couples standard -> c_std_1..5
+                                        // couples premium -> c_prem_1..4
+                                        const typePrefix = pkg.type === 'couples' ? 'c' : pkg.type === 'family' ? 'f' : 'fr';
+                                        const tierPrefix = pkg.tier === 'premium' ? 'prem' : 'std';
+                                        const key = `${typePrefix}_${tierPrefix}_${i + 1}`;
+                                        // @ts-ignore
+                                        const translatedFeat = t.packages.features[key];
+
+                                        return (
+                                            <li key={i} className={`flex items-start gap-3 text-sm ${pkg.tier === 'premium' ? 'text-white' : 'text-gray-300'}`}>
+                                                <span className={`iconify mt-0.5 text-lg ${pkg.tier === 'premium' ? 'text-gold-400' : 'text-gold-400'}`} data-icon={pkg.tier === 'premium' ? "solar:star-bold-duotone" : "solar:check-circle-bold-duotone"}></span>
+                                                {translatedFeat || feat}
+                                            </li>
+                                        );
+                                    })}
                                 </ul>
                                 <div className="border-t border-white/10 pt-6 flex justify-between items-center">
                                     <div>

@@ -2,40 +2,42 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../LanguageContext';
 
-const COUNTRIES = {
-    arab: [
-        { code: 'SA', name: 'Saudi Arabia', flag: '🇸🇦' },
-        { code: 'AE', name: 'UAE', flag: '🇦🇪' },
-        { code: 'QA', name: 'Qatar', flag: '🇶🇦' },
-        { code: 'KW', name: 'Kuwait', flag: '🇰🇼' },
-        { code: 'OM', name: 'Oman', flag: '🇴🇲' },
-        { code: 'BH', name: 'Bahrain', flag: '🇧🇭' },
-        { code: 'EG', name: 'Egypt', flag: '🇪🇬' },
-        { code: 'JO', name: 'Jordan', flag: '🇯🇴' },
-        { code: 'LB', name: 'Lebanon', flag: '🇱🇧' },
-        { code: 'IQ', name: 'Iraq', flag: '🇮🇶' },
-        { code: 'MA', name: 'Morocco', flag: '🇲🇦' },
-        { code: 'DZ', name: 'Algeria', flag: '🇩🇿' },
-        { code: 'TN', name: 'Tunisia', flag: '🇹🇳' },
-        { code: 'LY', name: 'Libya', flag: '🇱🇾' },
-        { code: 'YE', name: 'Yemen', flag: '🇾🇪' },
-        { code: 'PS', name: 'Palestine', flag: '🇵🇸' },
-        { code: 'SY', name: 'Syria', flag: '🇸🇾' },
-        { code: 'SD', name: 'Sudan', flag: '🇸🇩' },
-        { code: 'MR', name: 'Mauritania', flag: '🇲🇷' },
-    ],
-    other: [
-        { code: 'US', name: 'USA', flag: '🇺🇸' },
-        { code: 'GB', name: 'UK', flag: '🇬🇧' },
-        { code: 'IN', name: 'India', flag: '🇮🇳' },
-        { code: 'CN', name: 'China', flag: '🇨🇳' },
-        { code: 'RU', name: 'Russia', flag: '🇷🇺' },
-        { code: 'OT', name: 'Other', flag: '🌍' },
-    ]
-};
+// Moved countries logic inside component to use translations
 
 const Home: React.FC = () => {
     const { t, isRTL } = useLanguage();
+
+    const COUNTRIES = {
+        arab: [
+            { code: 'SA', name: t.countries.saudi_arabia, flag: '🇸🇦' },
+            { code: 'AE', name: t.countries.uae, flag: '🇦🇪' },
+            { code: 'QA', name: t.countries.qatar, flag: '🇶🇦' },
+            { code: 'KW', name: t.countries.kuwait, flag: '🇰🇼' },
+            { code: 'OM', name: t.countries.oman, flag: '🇴🇲' },
+            { code: 'BH', name: t.countries.bahrain, flag: '🇧🇭' },
+            { code: 'EG', name: t.countries.egypt, flag: '🇪🇬' },
+            { code: 'JO', name: t.countries.jordan, flag: '🇯🇴' },
+            { code: 'LB', name: t.countries.lebanon, flag: '🇱🇧' },
+            { code: 'IQ', name: t.countries.iraq, flag: '🇮🇶' },
+            { code: 'MA', name: t.countries.morocco, flag: '🇲🇦' },
+            { code: 'DZ', name: t.countries.algeria, flag: '🇩🇿' },
+            { code: 'TN', name: t.countries.tunisia, flag: '🇹🇳' },
+            { code: 'LY', name: t.countries.libya, flag: '🇱🇾' },
+            { code: 'YE', name: t.countries.yemen, flag: '🇾🇪' },
+            { code: 'PS', name: t.countries.palestine, flag: '🇵🇸' },
+            { code: 'SY', name: t.countries.syria, flag: '🇸🇾' },
+            { code: 'SD', name: t.countries.sudan, flag: '🇸🇩' },
+            { code: 'MR', name: t.countries.mauritania, flag: '🇲🇷' },
+        ],
+        other: [
+            { code: 'US', name: t.countries.usa, flag: '🇺🇸' },
+            { code: 'GB', name: t.countries.uk, flag: '🇬🇧' },
+            { code: 'IN', name: t.countries.india, flag: '🇮🇳' },
+            { code: 'CN', name: t.countries.china, flag: '🇨🇳' },
+            { code: 'RU', name: t.countries.russia, flag: '🇷🇺' },
+            { code: 'OT', name: t.countries.other, flag: '🌍' },
+        ]
+    };
 
     // Weather State
     const [weather, setWeather] = useState<{ temp: number; condition: string } | null>(null);
