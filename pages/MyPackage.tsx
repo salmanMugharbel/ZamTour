@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { Link, useSearchParams, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '../LanguageContext';
 import { useData } from '../DataContext';
 
@@ -13,12 +13,83 @@ const MyPackage: React.FC = () => {
 
     const pkg = packages.find(p => p.id === id);
 
+    const location = useLocation();
+    const isInquiryMode = location.state?.inquiryMode;
+    const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
+
+    const handleBookClick = () => {
+        if (isInquiryMode) {
+            // Direct WhatsApp Inquiry
+            const details = location.state?.inquiryDetails || {};
+            const phone = "77078382129";
+
+            const msg = `Hello ZamTour! I want to inquire about the ${pkg.title} package.
+            
+Details:
+- Country: ${details.country || 'Not specified'}
+- Duration: ${details.duration ? details.duration + ' days' : 'Not specified'}
+- Travelers: ${details.adults || 0} Adults, ${details.children || 0} Children`;
+
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+        } else {
+            navigate(`/payment?id=${pkg.id}`);
+        }
+    };
+
+    const handleFindCost = () => {
+        // Keep existing logic for fallback or direct use
+        const phone = "77078382129";
+        const msg = `Hello ZamTour! I want to inquire about the cost of the ${pkg.title} (${pkg.subtitle}) package.`;
+        const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+        window.open(url, '_blank');
+        setIsInquiryModalOpen(false);
+    };
+
     if (!pkg) {
         return <div className="text-white text-center pt-40">Package not found</div>;
     }
 
     return (
         <div className="w-full">
+            {/* INQUIRY MODAL */}
+            {isInquiryModalOpen && (
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4" onClick={() => setIsInquiryModalOpen(false)}>
+                    <div className="bg-[#1B1464] border border-white/20 rounded-3xl p-8 max-w-md w-full text-center shadow-2xl relative" onClick={e => e.stopPropagation()}>
+                        <button
+                            onClick={() => setIsInquiryModalOpen(false)}
+                            className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors"
+                        >
+                            <span className="iconify w-6 h-6" data-icon="solar:close-circle-bold"></span>
+                        </button>
+
+                        <div className="w-16 h-16 rounded-full bg-gold-400/20 text-gold-400 mx-auto flex items-center justify-center mb-6">
+                            <span className="iconify w-8 h-8" data-icon="solar:question-circle-bold-duotone"></span>
+                        </div>
+
+                        <h3 className="text-2xl font-bold text-white mb-2">{t.my_package?.inquiry_title || "How would you like to proceed?"}</h3>
+                        <p className="text-blue-200 mb-8">{t.my_package?.inquiry_desc || "You can proceed to payment directly or contact us to discuss the cost."}</p>
+
+                        <div className="flex flex-col gap-4">
+                            <button
+                                onClick={() => navigate(`/payment?id=${pkg.id}`)}
+                                className="w-full bg-gold-400 text-[#1B1464] py-3 rounded-xl font-bold hover:bg-white transition-colors shadow-lg flex items-center justify-center gap-2"
+                            >
+                                <span className="iconify" data-icon="solar:card-bold-duotone"></span>
+                                {t.my_package?.pay_now || "Pay Now"}
+                            </button>
+                            <button
+                                onClick={handleFindCost}
+                                className="w-full bg-white/10 text-white py-3 rounded-xl font-bold hover:bg-white/20 transition-colors border border-white/10 flex items-center justify-center gap-2"
+                            >
+                                <span className="iconify" data-icon="solar:chat-round-bold-duotone"></span>
+                                {t.my_package?.find_cost || "Find Out Cost"}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <main className="pt-32 pb-20 px-4 md:px-8 max-w-6xl mx-auto">
 
                 {/* PACKAGE TITLE HERO */}
@@ -39,7 +110,7 @@ const MyPackage: React.FC = () => {
                                 <span className="text-gray-400 text-sm font-semibold uppercase tracking-wider mb-2">{t.my_package.total_price}</span>
                                 <div className="text-4xl font-extrabold text-white mb-6">${pkg.price}</div>
                                 <button
-                                    onClick={() => navigate(`/payment?id=${pkg.id}`)}
+                                    onClick={handleBookClick}
                                     className="w-full bg-gold-400 text-[#1B1464] py-3 rounded-xl font-bold hover:bg-white transition-all shadow-lg"
                                 >
                                     {t.my_package.book_now}
