@@ -6,7 +6,7 @@ import { useData } from '../DataContext';
 
 const MyPackage: React.FC = () => {
     const { t, isRTL } = useLanguage();
-    const { packages } = useData();
+    const { packages, settings } = useData();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const id = searchParams.get('id') || 'coup_prem'; // Default fallback
@@ -21,7 +21,7 @@ const MyPackage: React.FC = () => {
         if (isInquiryMode) {
             // Direct WhatsApp Inquiry
             const details = location.state?.inquiryDetails || {};
-            const phone = "77078382129";
+            const phone = settings.whatsappNumber || "77477577971";
 
             const msg = `Hello ZamTour! I want to inquire about the ${pkg.title} package.
             
@@ -39,7 +39,7 @@ Details:
 
     const handleFindCost = () => {
         // Keep existing logic for fallback or direct use
-        const phone = "77078382129";
+        const phone = settings.whatsappNumber || "77477577971";
         const msg = `Hello ZamTour! I want to inquire about the cost of the ${pkg.title} (${pkg.subtitle}) package.`;
         const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
         window.open(url, '_blank');

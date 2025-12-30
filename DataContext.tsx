@@ -143,7 +143,7 @@ const defaultPrices: PackagePrices = {
     solo_std: 100, solo_prem: 280
 };
 
-const defaultSettings: AppSettings = { whatsappNumber: "77078382129" };
+const defaultSettings: AppSettings = { whatsappNumber: "77477577971" };
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
@@ -266,12 +266,16 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 setGalleries(newGalleries);
 
                 // 4. Fetch Settings
-                const { data: settingsData, error: settingsError } = await supabase.from('app_settings').select('*').single();
-                if (!settingsError && settingsData) {
-                    setSettings({ whatsappNumber: settingsData.whatsapp_number });
-                } else if (!settingsData) {
+                const { data: settingsData, error: settingsError } = await supabase.from('app_settings').select('*');
+
+                if (!settingsError && settingsData && settingsData.length > 0) {
+                    // Take the first row if multiple exist to avoid crashes
+                    const firstRow = settingsData[0];
+                    setSettings({ whatsappNumber: firstRow.whatsapp_number });
+                    // Store the ID for future updates if needed, or just rely on the first row concept
+                } else if (!settingsData || settingsData.length === 0) {
                     // Seed Settings
-                    await supabase.from('app_settings').insert({ id: 1, whatsapp_number: defaultSettings.whatsappNumber });
+                    await supabase.from('app_settings').insert({ whatsapp_number: defaultSettings.whatsappNumber });
                 }
 
             } catch (err: any) {
@@ -288,7 +292,6 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         fetchAllData();
     }, []);
 
-    // Update Functions (Same as before)
     const updateDestination = async (id: string, updates: Partial<Destination>) => {
         setDestinations(prev => prev.map(d => d.id === id ? { ...d, ...updates } : d));
         const { error } = await supabase.from('destinations').update(updates).eq('id', id);
@@ -378,9 +381,22 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     const updateSettings = async (updates: Partial<AppSettings>) => {
         setSettings(prev => ({ ...prev, ...updates }));
+
         const dbUpdates: any = {};
         if (updates.whatsappNumber) dbUpdates.whatsapp_number = updates.whatsappNumber;
-        const { error } = await supabase.from('app_settings').upsert({ id: 1, ...dbUpdates });
+
+        // First, get the ID of the row we want to update (the first one)
+        const { data: existing } = await supabase.from('app_settings').select('id').limit(1).single();
+
+        let error;
+        if (existing) {
+            const { error: updateError } = await supabase.from('app_settings').update(dbUpdates).eq('id', existing.id);
+            error = updateError;
+        } else {
+            const { error: insertError } = await supabase.from('app_settings').insert(dbUpdates);
+            error = insertError;
+        }
+
         if (error) { console.error("Error updating settings DB:", error); setError(error.message); }
     };
 
