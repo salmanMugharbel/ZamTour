@@ -662,21 +662,21 @@ const Admin: React.FC = () => {
                                             value={settings.whatsappNumber}
                                             onChange={(e) => updateSettings({ whatsappNumber: e.target.value })}
                                             className="flex-1 bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-white focus:border-gold-400 outline-none transition-all placeholder-gray-600"
-                                            placeholder="e.g. 77078382129"
+                                            placeholder="e.g. 77477577971"
                                         />
                                     </div>
                                     <p className="text-xs text-gray-500 mt-2 pl-14">
-                                        Enter number with country code, no symbols (e.g. 77078382129). This number is used for all WhatsApp links.
+                                        Enter number with country code, no symbols (e.g. 77477577971). This number is used for all WhatsApp links.
                                     </p>
                                 </div>
 
                                 <div className="pt-6 border-t border-white/5">
                                     <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 flex items-start gap-3">
-                                        <span className="iconify text-blue-400 text-xl mt-0.5" data-icon="solar:info-circle-bold"></span>
+                                        <span className="iconify text-blue-400 text-xl mt-0.5" data-icon="solar:database-bold"></span>
                                         <div>
-                                            <h4 className="text-blue-400 font-bold text-sm mb-1">Backup Information</h4>
+                                            <h4 className="text-blue-400 font-bold text-sm mb-1">Database Sync</h4>
                                             <p className="text-blue-200/60 text-xs leading-relaxed">
-                                                Changes made here are saved to your browser's local storage. Clearing your browser cache will reset these settings.
+                                                Changes are securely saved to the database in real-time. Your settings will persist across all devices and sessions.
                                             </p>
                                         </div>
                                     </div>

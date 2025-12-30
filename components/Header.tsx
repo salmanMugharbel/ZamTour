@@ -31,7 +31,7 @@ const Header: React.FC = () => {
                     <div className="flex-1 hidden md:flex"></div>
 
                     {/* Center: Logo */}
-                    <div className="flex-initial flex justify-center z-50 absolute left-1/2 transform -translate-x-1/2">
+                    <div className="flex-initial flex justify-center z-[60] absolute left-1/2 transform -translate-x-1/2">
                         <Link to="/" className="flex items-center gap-3 group">
                             <div className="w-8 h-8 relative">
                                 <svg viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full drop-shadow-lg">
