@@ -54,22 +54,28 @@ const MyPackage: React.FC = () => {
                                 </h3>
                                 <div className="grid grid-cols-2 gap-y-6 gap-x-4">
                                     {pkg.inclusions.map((inc, i) => {
-                                        // Mapping hardcoded icons/titles to translations
-                                        // Order of inclusions in pkg.inclusions matches the translation keys somewhat
-                                        // But safer to map by index or just use the structure if it's consistent
-                                        // Assuming standard inclusions logic:
-                                        // 0: sim, 1: tours, 2: transfers, 3: stay
+                                        // Standard inclusions mapping
                                         const keys = ['sim', 'tours', 'transfers', 'stay'];
+                                        const icons = [
+                                            'solar:sim-card-bold-duotone',
+                                            'solar:map-point-bold-duotone',
+                                            'solar:taxi-bold-duotone',
+                                            'solar:bed-bold-duotone'
+                                        ];
+
                                         const key = keys[i];
                                         // @ts-ignore
                                         const title = t.my_package.includes[key];
                                         // @ts-ignore
                                         const desc = t.my_package.includes[`${key}_desc`];
 
+                                        // Use mapped icon if available, otherwise fallback to data
+                                        const icon = icons[i] || inc.icon;
+
                                         return (
                                             <div key={i} className="flex items-center gap-3">
                                                 <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
-                                                    <span className="iconify w-6 h-6" data-icon={inc.icon}></span>
+                                                    <span className="iconify w-6 h-6" data-icon={icon}></span>
                                                 </div>
                                                 <div>
                                                     <p className="text-white font-bold text-sm">{title || inc.title}</p>

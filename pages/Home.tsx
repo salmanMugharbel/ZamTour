@@ -1,8 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../LanguageContext';
-
-// Moved countries logic inside component to use translations
 
 const Home: React.FC = () => {
     const { t, isRTL } = useLanguage();
@@ -336,6 +335,46 @@ Travelers: ${adults} Adults, ${children} Children`;
                 </div>
             </section>
 
+            {/* Explore CTA Section - Moved OUT of Hero Section */}
+            <section className="relative z-30 mt-10 mb-20 px-4 flex justify-center w-full">
+                <div className="w-full max-w-2xl">
+                    <Link to="/explore" className="block group relative overflow-hidden rounded-3xl bg-[#1B1464] border border-white/20 hover:border-gold-400/50 transition-all duration-300 shadow-2xl hover:shadow-[0_0_50px_rgba(212,175,55,0.3)]">
+                        <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                        {/* Decorative Background Elements */}
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-gold-400/20 rounded-full blur-[100px] -mr-16 -mt-16 pointer-events-none group-hover:bg-gold-400/30 transition-colors"></div>
+
+                        <div className="relative p-8 md:p-10 flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
+                            <div className="relative w-24 h-24 shrink-0 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                                {/* Rotating Ring */}
+                                <div className="absolute inset-0 border-2 border-dashed border-gold-400/50 rounded-full animate-[spin_10s_linear_infinite]"></div>
+
+                                {/* Pulse Glow */}
+                                <div className="absolute inset-0 bg-gold-400/20 rounded-full animate-pulse blur-md"></div>
+
+                                {/* Main Icon Circle */}
+                                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-gold-300 to-gold-500 shadow-lg flex items-center justify-center relative z-10">
+                                    <span className="iconify text-[#1B1464] w-10 h-10" data-icon="solar:compass-bold-duotone"></span>
+                                </div>
+                            </div>
+
+                            <div className="flex-1">
+                                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 group-hover:text-gold-400 transition-colors">
+                                    {t.explore.title} {t.explore.title_highlight}
+                                </h3>
+                                <p className="text-blue-100/80 text-sm md:text-base leading-relaxed mb-6">
+                                    {t.explore.subtitle}
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-gold-400 font-bold uppercase tracking-wider text-sm group-hover:gap-4 transition-all">
+                                    {t.nav.explore}
+                                    <span className="iconify" data-icon="solar:arrow-right-linear"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+                </div>
+            </section>
+
             {/* INFO & TIPS CAROUSEL */}
             <section className="relative py-24 z-30 max-w-7xl mx-auto px-6">
                 <div className="flex justify-between items-end mb-12 animate-on-scroll">
@@ -370,6 +409,40 @@ Travelers: ${adults} Adults, ${children} Children`;
                     </div>
                 </div>
             </section>
+
+            {/* Packages CTA Card */}
+            <div className="flex justify-center pb-20 relative z-30 animate-on-scroll px-4">
+                <Link to="/packages" className="block group relative overflow-hidden rounded-3xl bg-[#1B1464] border border-gold-400/30 hover:border-gold-400 transition-all duration-300 shadow-2xl w-full max-w-4xl hover:shadow-[0_0_60px_rgba(212,175,55,0.2)]">
+
+                    {/* Background Pattern */}
+                    <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-repeat"></div>
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-gold-400/20 rounded-full blur-[80px]"></div>
+                    <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-500/20 rounded-full blur-[80px]"></div>
+
+                    <div className="relative p-8 md:p-12 flex flex-col md:flex-row items-center gap-10">
+                        <div className="flex-1 text-center md:text-left">
+                            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                                {t.packages.title} <span className="text-gold-400">{t.packages.title_highlight}</span>
+                            </h2>
+                            <p className="text-blue-100/80 text-lg mb-8 max-w-2xl">
+                                {t.packages.subtitle}
+                            </p>
+                            <span className="inline-block bg-gold-400 text-[#1B1464] px-8 py-3 rounded-full font-bold text-lg shadow-lg group-hover:bg-white group-hover:scale-105 transition-all duration-300">
+                                {t.nav.packages}
+                            </span>
+                        </div>
+
+                        {/* Visual Icon Group */}
+                        <div className="relative w-40 h-40 shrink-0">
+                            <div className="absolute inset-0 bg-gradient-to-br from-gold-400 to-[#1B1464] rounded-full opacity-20 animate-pulse"></div>
+                            <div className="absolute inset-2 border-2 border-dashed border-gold-400/50 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <span className="iconify text-gold-400 w-20 h-20 drop-shadow-[0_0_15px_rgba(212,175,55,0.5)]" data-icon="solar:box-minimalistic-bold-duotone"></span>
+                            </div>
+                        </div>
+                    </div>
+                </Link>
+            </div>
         </div>
     );
 };
