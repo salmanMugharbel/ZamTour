@@ -109,3 +109,19 @@ export const PLACE_GALLERIES: { [key: string]: string[] } = {
     "/images/bezdn-oil-strawberry-farm/image-5.jpg"
   ]
 };
+
+export const HIGHLIGHT_ICONS: { [key: string]: { h1: string, h2: string, h3: string, h4: string } } = {
+  '1': { h1: 'solar:chef-hat-heart-bold-duotone', h2: 'solar:tea-cup-bold-duotone', h3: 'solar:bag-heart-bold-duotone', h4: 'solar:city-bold-duotone' },
+  '2': { h1: 'solar:picnic-basket-bold-duotone', h2: 'solar:history-bold-duotone', h3: 'solar:eye-bold-duotone', h4: 'solar:leaf-bold-duotone' },
+  '3': { h1: 'solar:waterdrops-bold-duotone', h2: 'solar:hiking-bold-duotone', h3: 'solar:tree-bold-duotone', h4: 'solar:wind-bold-duotone' },
+  '4': { h1: 'solar:tram-bold-duotone', h2: 'solar:city-bold-duotone', h3: 'solar:paw-bold-duotone', h4: 'solar:chef-hat-bold-duotone' },
+  '5': { h1: 'solar:bag-heart-bold-duotone', h2: 'solar:videocamera-bold-duotone', h3: 'solar:hamburger-menu-bold-duotone', h4: 'solar:gamepad-bold-duotone' },
+  '6': { h1: 'solar:tag-price-bold-duotone', h2: 'solar:cart-large-bold-duotone', h3: 'solar:sofa-bold-duotone', h4: 'solar:calendar-mark-bold-duotone' },
+  '7': { h1: 'solar:gem-bold-duotone', h2: 'solar:wine-glass-bold-duotone', h3: 'solar:videocamera-bold-duotone', h4: 'solar:palette-bold-duotone' },
+  '8': { h1: 'solar:snowflake-bold-duotone', h2: 'solar:tram-bold-duotone', h3: 'solar:hiking-bold-duotone', h4: 'solar:mountains-bold-duotone' },
+  '9': { h1: 'solar:skateboarding-bold-duotone', h2: 'solar:history-bold-duotone', h3: 'solar:stairs-bold-duotone', h4: 'solar:shield-warning-bold-duotone' },
+  '10': { h1: 'solar:hiking-bold-duotone', h2: 'solar:camera-bold-duotone', h3: 'solar:boat-bold-duotone', h4: 'solar:campfire-bold-duotone' },
+  '11': { h1: 'solar:home-bold-duotone', h2: 'solar:paw-bold-duotone', h3: 'solar:tram-bold-duotone', h4: 'solar:spa-candle-bold-duotone' },
+  '12': { h1: 'solar:gallery-wide-bold-duotone', h2: 'solar:camera-bold-duotone', h3: 'solar:leaf-bold-duotone', h4: 'solar:shield-bold-duotone' },
+  '13': { h1: 'solar:hand-stars-bold-duotone', h2: 'solar:apple-bold-duotone', h3: 'solar:users-group-rounded-bold-duotone', h4: 'solar:leaf-bold-duotone' }
+};

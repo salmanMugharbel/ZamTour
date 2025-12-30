@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
                 <div>
                     <h4 className="text-white font-bold mb-4">{t.footer.social}</h4>
                     <div className="flex gap-4">
-                        <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-pink-500 hover:bg-gold-500 hover:text-brand-dark transition"><span className="iconify" data-icon="ri:instagram-fill"></span></a>
+                        <a href="https://www.instagram.com/zamzam_tourism_?igsh=MWE2dW4yZ2ZxNzA0MQ==" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-pink-500 hover:bg-gold-500 hover:text-brand-dark transition"><span className="iconify" data-icon="ri:instagram-fill"></span></a>
                         <a href="https://wa.me/77078382129" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-green-500 hover:bg-gold-500 hover:text-brand-dark transition"><span className="iconify" data-icon="ic:baseline-whatsapp"></span></a>
                     </div>
                 </div>

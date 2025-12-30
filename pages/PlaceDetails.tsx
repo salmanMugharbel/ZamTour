@@ -3,6 +3,8 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../LanguageContext';
 import { useData } from '../DataContext';
 
+import { HIGHLIGHT_ICONS } from '../constants';
+
 const PlaceDetails: React.FC = () => {
     const { t, isRTL } = useLanguage();
     const { destinations, galleries } = useData();
@@ -18,6 +20,14 @@ const PlaceDetails: React.FC = () => {
 
     // Find gallery - use the potentially updated main image from DataContext as fallback
     const galleryImages = id ? galleries[id] || [placeData?.img || ''] : [];
+
+    // Get specific icons for this place
+    const icons = HIGHLIGHT_ICONS[id] || {
+        h1: 'solar:star-bold-duotone',
+        h2: 'solar:star-bold-duotone',
+        h3: 'solar:star-bold-duotone',
+        h4: 'solar:star-bold-duotone'
+    };
 
     if (!basicInfo || !placeData) {
         return <div className="text-white text-center pt-40">{t.explore.place_not_found}</div>;
@@ -60,10 +70,10 @@ const PlaceDetails: React.FC = () => {
 
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">
                             {[
-                                { icon: 'solar:star-bold-duotone', label: placeData.highlights.h1 },
-                                { icon: 'solar:camera-bold-duotone', label: placeData.highlights.h2 },
-                                { icon: 'solar:map-arrow-bold-duotone', label: placeData.highlights.h3 },
-                                { icon: 'solar:heart-bold-duotone', label: placeData.highlights.h4 }
+                                { icon: icons.h1, label: placeData.highlights.h1 },
+                                { icon: icons.h2, label: placeData.highlights.h2 },
+                                { icon: icons.h3, label: placeData.highlights.h3 },
+                                { icon: icons.h4, label: placeData.highlights.h4 }
                             ].map((h, i) => (
                                 <div key={i} className="bg-white/5 border border-white/10 p-4 rounded-2xl text-center">
                                     <span className="iconify w-8 h-8 text-gold-400 mx-auto mb-2" data-icon={h.icon}></span>

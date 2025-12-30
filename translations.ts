@@ -10,8 +10,8 @@ export const translations = {
             contact: "Contact"
         },
         hero: {
-            title_prefix: "The Soul of",
-            title_highlight: "Almaty City",
+            title_prefix: "Welcome to",
+            title_highlight: "Almaty — the Flower of Central Asia",
             subtitle: "Where the \"City of Apples\" meets the majestic Trans-Ili Alatau mountains. Experience luxury in the heart of Central Asia.",
             weather_label: "Almaty, Today"
         },
@@ -623,7 +623,7 @@ export const translations = {
             contact: "اتصل بنا"
         },
         hero: {
-            title_prefix: "روح مدينة",
+            title_prefix: "حياكم في مدينة",
             title_highlight: "ألماتي",
             subtitle: "حيث تلتقي \"مدينة التفاح\" بجبال ترانس إيلي ألاتاو المهيبة. استمتع بالرفاهية في قلب آسيا الوسطى.",
             weather_label: "ألماتي، اليوم"
