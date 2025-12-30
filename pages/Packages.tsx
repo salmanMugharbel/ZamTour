@@ -1,16 +1,26 @@
 
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '../LanguageContext';
 import { useData } from '../DataContext';
 
 const Packages: React.FC = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const { t } = useLanguage();
     const { packages } = useData();
 
+    // Check if we are in inquiry mode
+    const isInquiryMode = location.state?.inquiryMode;
+
     const handleSelect = (id: string) => {
-        navigate(`/my-package?id=${id}`);
+        // Pass inquiry state forward
+        navigate(`/my-package?id=${id}`, {
+            state: {
+                inquiryMode: isInquiryMode,
+                inquiryDetails: location.state?.inquiryDetails // Pass details forward
+            }
+        });
     };
 
     // Group packages by type to maintain layout structure
@@ -111,6 +121,13 @@ const Packages: React.FC = () => {
                     </p>
                 </div>
             </section>
+
+            {/* Inquiry Mode Banner */}
+            {isInquiryMode && (
+                <div className="bg-gold-400 text-[#1B1464] py-4 px-4 text-center font-bold text-lg sticky top-20 z-40 shadow-lg animate-pulse">
+                    Please complete choosing your package to proceed with your inquiry.
+                </div>
+            )}
 
             <main className="py-20 px-4 md:px-8 max-w-6xl mx-auto">
                 {renderPackageSection(t.packages.couples, "solar:heart-angle-bold-duotone", "text-pink-400", couplesPackages)}
