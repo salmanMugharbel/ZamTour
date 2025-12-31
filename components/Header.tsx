@@ -62,8 +62,11 @@ const Header: React.FC = () => {
                 <button onClick={toggleMenu} className={`absolute top-8 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-all ${isRTL ? 'left-8' : 'right-8'}`}>
                     <span className="iconify w-6 h-6" data-icon="solar:close-circle-bold"></span>
                 </button>
-                <nav className="flex flex-col items-center gap-8 w-full max-w-xs px-6">
-                    {/* Language List */}
+                <nav className="flex flex-col items-center justify-between h-full py-12 w-full max-w-xs px-6">
+                    {/* Empty spacer for top */}
+                    <div></div>
+
+                    {/* Language List - Now at bottom */}
                     <div className="flex flex-col items-center gap-6 w-full">
                         <p className="text-white/50 text-sm uppercase tracking-widest font-bold">Select Language</p>
                         <div className="flex flex-col w-full gap-3">
