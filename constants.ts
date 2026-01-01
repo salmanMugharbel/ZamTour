@@ -13,7 +13,8 @@ export const DESTINATIONS: Destination[] = [
   { id: '10', name: "Kolsai Lake", cat: "Essentials", rating: 5.0, reviews: 2200, img: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=500&auto=format&fit=crop" },
   { id: '11', name: "Oi Qaragai Resort", cat: "Essentials", rating: 4.8, reviews: 950, img: "https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=500&auto=format&fit=crop" },
   { id: '12', name: "Big Almaty Lake", cat: "Essentials", rating: 4.9, reviews: 5000, img: "https://images.unsplash.com/photo-1549643276-fbc2bd874326?q=80&w=500&auto=format&fit=crop" },
-  { id: '13', name: "Strawberry Farm", cat: "Outdoors", rating: 4.8, reviews: 200, img: "/images/bezdn-oil-strawberry-farm/image-1.jpg" }
+  { id: '13', name: "Strawberry Farm", cat: "Outdoors", rating: 4.8, reviews: 200, img: "/images/bezdn-oil-strawberry-farm/image-1.jpg" },
+  { id: '14', name: "Arbat Street", cat: "Culture", rating: 4.7, reviews: 1500, img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=500&auto=format&fit=crop" }
 ];
 
 export const TIPS: Tip[] = [
@@ -107,6 +108,9 @@ export const PLACE_GALLERIES: { [key: string]: string[] } = {
     "/images/strawberry-farm/IMG-20251207-WA0085.jpg",
     "/images/bezdn-oil-strawberry-farm/image-4.jpg",
     "/images/bezdn-oil-strawberry-farm/image-5.jpg"
+  ],
+  '14': [ // Arbat Street
+    "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?q=80&w=500&auto=format&fit=crop"
   ]
 };
 
@@ -123,5 +127,6 @@ export const HIGHLIGHT_ICONS: { [key: string]: { h1: string, h2: string, h3: str
   '10': { h1: 'solar:hiking-bold-duotone', h2: 'solar:camera-bold-duotone', h3: 'solar:boat-bold-duotone', h4: 'solar:campfire-bold-duotone' },
   '11': { h1: 'solar:home-bold-duotone', h2: 'solar:paw-bold-duotone', h3: 'solar:tram-bold-duotone', h4: 'solar:spa-candle-bold-duotone' },
   '12': { h1: 'solar:gallery-wide-bold-duotone', h2: 'solar:camera-bold-duotone', h3: 'solar:leaf-bold-duotone', h4: 'solar:shield-bold-duotone' },
-  '13': { h1: 'solar:hand-stars-bold-duotone', h2: 'solar:apple-bold-duotone', h3: 'solar:users-group-rounded-bold-duotone', h4: 'solar:leaf-bold-duotone' }
+  '13': { h1: 'solar:hand-stars-bold-duotone', h2: 'solar:apple-bold-duotone', h3: 'solar:users-group-rounded-bold-duotone', h4: 'solar:leaf-bold-duotone' },
+  '14': { h1: 'solar:palette-bold-duotone', h2: 'solar:bag-heart-bold-duotone', h3: 'solar:music-notes-bold-duotone', h4: 'solar:cup-hot-bold-duotone' }
 };

@@ -2,23 +2,37 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage, Language } from '../LanguageContext';
+import { useData } from '../DataContext';
 
 const Header: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isLangOpen, setIsLangOpen] = useState(false);
     const location = useLocation();
     const { t, setLanguage, language, isRTL } = useLanguage();
+    const { settings } = useData();
+
+    const languages: { code: Language; name: string; flag: string }[] = [
+        { code: 'ar', name: 'Arabic', flag: '🇸🇦' },
+        { code: 'en', name: 'English', flag: '🇺🇸' },
+        { code: 'ru', name: 'Russian', flag: '🇷🇺' },
+        { code: 'kk', name: 'Kazakh', flag: '🇰🇿' }
+    ];
+
+    const currentLang = languages.find(l => l.code === language) || languages[0];
 
     // Close menu on route change
     useEffect(() => {
         setIsMenuOpen(false);
     }, [location]);
 
-    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
-    const isActive = (path: string) => location.pathname === path ? "text-white" : "text-gray-300 hover:text-white";
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+        setIsLangOpen(false);
+    };
 
     const handleLanguageChange = (lang: Language) => {
         setLanguage(lang);
+        setIsLangOpen(false);
     };
 
     return (
@@ -45,10 +59,15 @@ const Header: React.FC = () => {
                     {/* Right: Hamburger Menu */}
                     <div className="flex-1 flex justify-end gap-4 z-50">
                         {/* Book Now - Hidden on mobile */}
-                        <Link to="/payment" className="hidden md:flex bg-gold-400 text-[#1B1464] px-4 md:px-6 py-2 rounded-full font-bold hover:bg-white transition-colors shadow-lg text-xs md:text-sm items-center gap-2 whitespace-nowrap">
+                        <a
+                            href={`https://wa.me/${settings?.whatsappNumber || "77477577971"}?text=${encodeURIComponent("Hello ZamTour! I want to inquire about booking a tour.")}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hidden md:flex bg-gold-400 text-[#1B1464] px-4 md:px-6 py-2 rounded-full font-bold hover:bg-white transition-colors shadow-lg text-xs md:text-sm items-center gap-2 whitespace-nowrap"
+                        >
                             <span>{t.nav.book}</span>
                             <span className="iconify" data-icon="solar:arrow-right-linear"></span>
-                        </Link>
+                        </a>
 
                         <button onClick={toggleMenu} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-gold-400 hover:text-[#1B1464] transition-colors shadow-lg">
                             <span className="iconify w-6 h-6" data-icon="solar:hamburger-menu-linear"></span>
@@ -66,32 +85,49 @@ const Header: React.FC = () => {
                     {/* Empty spacer for top */}
                     <div></div>
 
-                    {/* Language List - Now at bottom */}
-                    <div className="flex flex-col items-center gap-6 w-full">
-                        <p className="text-white/50 text-sm uppercase tracking-widest font-bold">Select Language</p>
-                        <div className="flex flex-col w-full gap-3">
-                            <button onClick={() => { handleLanguageChange('ar'); toggleMenu(); }} className={`flex items-center gap-4 w-full p-4 rounded-xl border transition-all ${language === 'ar' ? 'bg-gold-400 text-[#1B1464] border-gold-400' : 'bg-white/5 text-white border-white/10 hover:bg-white/10'}`}>
-                                <span className="text-2xl">🇸🇦</span>
-                                <span className="text-lg font-bold">Arabic</span>
-                                {language === 'ar' && <span className="iconify ml-auto w-6 h-6" data-icon="solar:check-circle-bold"></span>}
+                    {/* Custom Dropdown Selector */}
+                    <div className="w-full flex flex-col items-start">
+                        <label className="text-white/60 text-sm font-bold mb-2 px-1 uppercase tracking-widest">{t.tips.language}</label>
+                        <div className="relative w-full">
+                            {/* Dropdown Header */}
+                            <button
+                                onClick={() => setIsLangOpen(!isLangOpen)}
+                                className={`w-full bg-white text-gray-700 px-5 py-4 flex items-center justify-between shadow-2xl transition-all duration-300 ${isLangOpen ? 'rounded-t-[20px] border-b border-gray-100' : 'rounded-[20px]'}`}
+                            >
+                                <div className="flex items-center gap-3">
+                                    <span className="text-2xl">{currentLang.flag}</span>
+                                    <span className="font-bold text-lg">{currentLang.name}</span>
+                                </div>
+                                <span className={`iconify w-6 h-6 text-gray-400 transition-transform duration-300 ${isLangOpen ? 'rotate-180' : ''}`} data-icon="solar:alt-arrow-down-linear"></span>
                             </button>
-                            <button onClick={() => { handleLanguageChange('en'); toggleMenu(); }} className={`flex items-center gap-4 w-full p-4 rounded-xl border transition-all ${language === 'en' ? 'bg-gold-400 text-[#1B1464] border-gold-400' : 'bg-white/5 text-white border-white/10 hover:bg-white/10'}`}>
-                                <span className="text-2xl">🇺🇸</span>
-                                <span className="text-lg font-bold">English</span>
-                                {language === 'en' && <span className="iconify ml-auto w-6 h-6" data-icon="solar:check-circle-bold"></span>}
-                            </button>
-                            <button onClick={() => { handleLanguageChange('ru'); toggleMenu(); }} className={`flex items-center gap-4 w-full p-4 rounded-xl border transition-all ${language === 'ru' ? 'bg-gold-400 text-[#1B1464] border-gold-400' : 'bg-white/5 text-white border-white/10 hover:bg-white/10'}`}>
-                                <span className="text-2xl">🇷🇺</span>
-                                <span className="text-lg font-bold">Russian</span>
-                                {language === 'ru' && <span className="iconify ml-auto w-6 h-6" data-icon="solar:check-circle-bold"></span>}
-                            </button>
-                            <button onClick={() => { handleLanguageChange('kk'); toggleMenu(); }} className={`flex items-center gap-4 w-full p-4 rounded-xl border transition-all ${language === 'kk' ? 'bg-gold-400 text-[#1B1464] border-gold-400' : 'bg-white/5 text-white border-white/10 hover:bg-white/10'}`}>
-                                <span className="text-2xl">🇰🇿</span>
-                                <span className="text-lg font-bold">Kazakh</span>
-                                {language === 'kk' && <span className="iconify ml-auto w-6 h-6" data-icon="solar:check-circle-bold"></span>}
-                            </button>
+
+                            {/* Dropdown Items */}
+                            {isLangOpen && (
+                                <div className="absolute top-full left-0 right-0 bg-white shadow-2xl rounded-b-[20px] overflow-hidden z-20 animate-in fade-in slide-in-from-top-2 duration-300">
+                                    {languages.map((lang) => (
+                                        <button
+                                            key={lang.code}
+                                            onClick={() => {
+                                                handleLanguageChange(lang.code);
+                                                // Optional: toggleMenu() after selection if desired
+                                                setTimeout(toggleMenu, 300);
+                                            }}
+                                            className={`w-full px-5 py-4 flex items-center gap-3 hover:bg-gray-50 transition-colors text-left ${language === lang.code ? 'bg-blue-50 text-[#1B1464]' : 'text-gray-600'}`}
+                                        >
+                                            <span className="text-2xl">{lang.flag}</span>
+                                            <span className="font-bold text-lg flex-1">{lang.name}</span>
+                                            {language === lang.code && (
+                                                <span className="iconify text-brand-light w-5 h-5" data-icon="solar:check-circle-bold"></span>
+                                            )}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
+
+                    {/* Bottom Spacer */}
+                    <div className="h-20"></div>
                 </nav>
             </div>
         </>

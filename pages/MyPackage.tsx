@@ -18,23 +18,18 @@ const MyPackage: React.FC = () => {
     const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
 
     const handleBookClick = () => {
-        if (isInquiryMode) {
-            // Direct WhatsApp Inquiry
-            const details = location.state?.inquiryDetails || {};
-            const phone = settings.whatsappNumber || "77477577971";
+        const details = location.state?.inquiryDetails || {};
+        const phone = settings.whatsappNumber || "77477577971";
 
-            const msg = `Hello ZamTour! I want to inquire about the ${pkg.title} package.
+        const msg = `Hello ZamTour! I want to inquire about the ${pkg.title} package.
             
 Details:
 - Country: ${details.country || 'Not specified'}
 - Duration: ${details.duration ? details.duration + ' days' : 'Not specified'}
 - Travelers: ${details.adults || 0} Adults, ${details.children || 0} Children`;
 
-            const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-            window.open(url, '_blank');
-        } else {
-            navigate(`/payment?id=${pkg.id}`);
-        }
+        const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+        window.open(url, '_blank');
     };
 
     const handleFindCost = () => {
@@ -72,18 +67,11 @@ Details:
 
                         <div className="flex flex-col gap-4">
                             <button
-                                onClick={() => navigate(`/payment?id=${pkg.id}`)}
+                                onClick={handleFindCost}
                                 className="w-full bg-gold-400 text-[#1B1464] py-3 rounded-xl font-bold hover:bg-white transition-colors shadow-lg flex items-center justify-center gap-2"
                             >
-                                <span className="iconify" data-icon="solar:card-bold-duotone"></span>
-                                {t.my_package?.pay_now || "Pay Now"}
-                            </button>
-                            <button
-                                onClick={handleFindCost}
-                                className="w-full bg-white/10 text-white py-3 rounded-xl font-bold hover:bg-white/20 transition-colors border border-white/10 flex items-center justify-center gap-2"
-                            >
                                 <span className="iconify" data-icon="solar:chat-round-bold-duotone"></span>
-                                {t.my_package?.find_cost || "Find Out Cost"}
+                                {t.my_package?.find_cost || "Inquire via WhatsApp"}
                             </button>
                         </div>
                     </div>
