@@ -166,11 +166,16 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 let { data: destData, error: destError } = await supabase.from('destinations').select('*').order('created_at', { ascending: false });
                 if (destError) throw destError;
 
-                // SEED IF EMPTY
-                if (!destData || destData.length === 0) {
-                    const { error: seedError } = await supabase.from('destinations').insert(DESTINATIONS);
-                    if (seedError) throw seedError;
-                    destData = DESTINATIONS;
+                // Sync local destinations with DB (Ensures new items in constants.ts appear)
+                const dbIds = new Set((destData || []).map(d => d.id));
+                const missingLocal = DESTINATIONS.filter(d => !dbIds.has(d.id));
+
+                if (missingLocal.length > 0) {
+                    const { error: seedError } = await supabase.from('destinations').insert(missingLocal);
+                    if (!seedError) {
+                        const { data: refetched } = await supabase.from('destinations').select('*').order('created_at', { ascending: false });
+                        destData = refetched;
+                    }
                 }
                 setDestinations(destData || []);
 

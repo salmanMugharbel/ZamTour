@@ -12,7 +12,7 @@ import About from './pages/About';
 import Admin from './pages/Admin';
 import { LanguageProvider, useLanguage } from './LanguageContext';
 import { DataProvider } from './DataContext';
-import Payment from './pages/Payment';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const ScrollToTop = () => {
     const { pathname } = useLocation();
@@ -23,7 +23,7 @@ const ScrollToTop = () => {
 };
 
 const AppContent: React.FC = () => {
-    const { isRTL } = useLanguage();
+    const { language, isRTL } = useLanguage();
 
     // Global Spotlight Effect
     useEffect(() => {
@@ -68,7 +68,7 @@ const AppContent: React.FC = () => {
     }, []);
 
     return (
-        <div className={`flex flex-col min-h-screen relative ${isRTL ? 'font-arabic' : 'font-sans'}`}>
+        <div key={language} className={`flex flex-col min-h-screen relative ${isRTL ? 'font-arabic' : 'font-sans'}`}>
             <Header />
             <div className="flex-1 w-full">
                 <Routes>
@@ -79,7 +79,6 @@ const AppContent: React.FC = () => {
                     <Route path="/my-package" element={<MyPackage />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/admin" element={<Admin />} />
-                    <Route path="/payment" element={<Payment />} />
                 </Routes>
             </div>
             <Footer />
@@ -93,7 +92,9 @@ const App: React.FC = () => {
             <DataProvider>
                 <Router>
                     <ScrollToTop />
-                    <AppContent />
+                    <ErrorBoundary>
+                        <AppContent />
+                    </ErrorBoundary>
                 </Router>
             </DataProvider>
         </LanguageProvider>
