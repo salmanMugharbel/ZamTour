@@ -94,7 +94,7 @@ export const translations = {
             services: "Services",
             social: "Social",
             rights: "© 2025 ZamTour Luxury Travel. All rights reserved.",
-            made_by: "Made by SaMug",
+            made_by: "Made by Salman Mugharbel 🇸🇾",
             write_me: "Write me ✌😎😁"
         },
         packages: {
@@ -407,7 +407,7 @@ export const translations = {
             services: "Услуги",
             social: "Социальные сети",
             rights: "© 2025 ZamTour Luxury Travel. Все права защищены.",
-            made_by: "Сделано SaMug",
+            made_by: "Сделано Salman Mugharbel 🇸🇾",
             write_me: "Напиши мне ✌😎😁"
         },
         packages: {
@@ -720,7 +720,7 @@ export const translations = {
             services: "الخدمات",
             social: "تواصل معنا",
             rights: "© 2025 ZamTour للسفر الفاخر. جميع الحقوق محفوظة.",
-            made_by: "صنع بواسطة SaMug",
+            made_by: "صنع بواسطة سلمان مغربل 🇸🇾",
             write_me: "راسلني ✌😎😁"
         },
         packages: {
