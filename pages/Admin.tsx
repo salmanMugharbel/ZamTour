@@ -15,6 +15,8 @@ const Admin: React.FC = () => {
 
         packages,
         updatePackage,
+        addPackage,
+        deletePackage,
 
         prices,
         updatePrice,
@@ -134,6 +136,33 @@ const Admin: React.FC = () => {
                     setNewPlace(prev => ({ ...prev, img: base64String }));
                 } else if (destId) {
                     updateDestination(destId, { img: base64String });
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handlePackageImageUpload = (e: React.ChangeEvent<HTMLInputElement>, pkgId: string, dayIndex?: number) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            if (file.size > 500 * 1024) { // 500KB limit
+                alert("File is too large! Please upload images under 500KB.");
+                return;
+            }
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const base64String = reader.result as string;
+                const pkg = packages.find(p => p.id === pkgId);
+                if (!pkg) return;
+
+                if (dayIndex !== undefined) {
+                    // Update Itinerary Day Image
+                    const newItinerary = [...pkg.itinerary];
+                    newItinerary[dayIndex].image = base64String;
+                    updatePackage(pkgId, { itinerary: newItinerary });
+                } else {
+                    // Update Main Package Image
+                    updatePackage(pkgId, { image: base64String });
                 }
             };
             reader.readAsDataURL(file);
@@ -542,6 +571,29 @@ const Admin: React.FC = () => {
                     <div className="animate-on-scroll">
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">Manage Packages</h2>
+                            <button
+                                onClick={() => {
+                                    const newId = `new_pkg_${Date.now()}`;
+                                    addPackage({
+                                        id: newId,
+                                        type: 'couples',
+                                        tier: 'standard',
+                                        title: 'New Package',
+                                        subtitle: 'Custom Tour',
+                                        price: 0,
+                                        priceLabel: 'Total Price',
+                                        image: 'https://welcome.shymbulak.com/wp-content/uploads/2024/11/cb8654049f3cbf379a15e6b31a8d0aab-scaled.jpg',
+                                        features: ['New Feature'],
+                                        inclusions: [],
+                                        itinerary: [],
+                                        cancellationPolicy: 'Free cancellation up to 48 hours before the trip.'
+                                    });
+                                }}
+                                className="bg-gold-400 text-[#1B1464] px-4 py-2 rounded-xl font-bold flex items-center gap-2 hover:bg-white transition shadow-lg text-sm"
+                            >
+                                <span className="iconify" data-icon="solar:add-circle-bold"></span>
+                                Create Package
+                            </button>
                         </div>
 
                         <div className="space-y-8">
@@ -550,7 +602,28 @@ const Admin: React.FC = () => {
                                     <div className="flex flex-col md:flex-row gap-6">
                                         {/* Basic Info */}
                                         <div className="w-full md:w-1/3 space-y-4">
-                                            <h3 className="text-gold-400 font-bold border-b border-white/10 pb-2 mb-4">{pkg.type.toUpperCase()} - {pkg.tier.toUpperCase()}</h3>
+                                            <div className="flex justify-between items-center border-b border-white/10 pb-2 mb-4">
+                                                <h3 className="text-gold-400 font-bold">{pkg.type.toUpperCase()} - {pkg.tier.toUpperCase()}</h3>
+                                                <button
+                                                    onClick={() => { if (window.confirm('Are you sure you want to delete this package?')) deletePackage(pkg.id) }}
+                                                    className="text-red-400 hover:text-red-300 text-xs font-bold px-2 py-1 bg-red-500/10 rounded"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                            <div className="space-y-1">
+                                                <label className="text-xs text-gray-400">Type</label>
+                                                <select
+                                                    value={pkg.type}
+                                                    onChange={(e) => updatePackage(pkg.id, { type: e.target.value as any })}
+                                                    className="w-full bg-black/20 border border-white/10 rounded px-3 py-2 text-white text-sm outline-none"
+                                                >
+                                                    <option value="couples">Couples</option>
+                                                    <option value="family">Family</option>
+                                                    <option value="friends">Friends</option>
+                                                    <option value="solo">Solo</option>
+                                                </select>
+                                            </div>
                                             <div className="space-y-1">
                                                 <label className="text-xs text-gray-400">Title</label>
                                                 <input type="text" value={pkg.title} onChange={(e) => updatePackage(pkg.id, { title: e.target.value })} className="w-full bg-black/20 border border-white/10 rounded px-3 py-2 text-white text-sm" />
@@ -570,8 +643,19 @@ const Admin: React.FC = () => {
                                                 </div>
                                             </div>
                                             <div className="space-y-1">
-                                                <label className="text-xs text-gray-400">Main Image URL</label>
-                                                <input type="text" value={pkg.image} onChange={(e) => updatePackage(pkg.id, { image: e.target.value })} className="w-full bg-black/20 border border-white/10 rounded px-3 py-2 text-white text-xs" />
+                                                <label className="text-xs text-gray-400">Main Image</label>
+                                                <div className="flex items-center gap-2">
+                                                    <label className="cursor-pointer p-2 bg-black/20 border border-white/10 rounded-lg hover:bg-gold-400/10 hover:border-gold-400/50 transition-colors" title="Upload Image">
+                                                        <span className="iconify text-gray-400 hover:text-gold-400" data-icon="solar:upload-bold"></span>
+                                                        <input
+                                                            type="file"
+                                                            accept="image/*"
+                                                            onChange={(e) => handlePackageImageUpload(e, pkg.id)}
+                                                            className="hidden"
+                                                        />
+                                                    </label>
+                                                    <input type="text" value={pkg.image} onChange={(e) => updatePackage(pkg.id, { image: e.target.value })} className="flex-1 bg-black/20 border border-white/10 rounded px-3 py-2 text-white text-xs outline-none focus:border-gold-400/50" placeholder="Image URL" />
+                                                </div>
                                             </div>
                                         </div>
 
@@ -613,16 +697,16 @@ const Admin: React.FC = () => {
                                                 </div>
                                                 <div className="space-y-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
                                                     {pkg.itinerary.map((day, i) => (
-                                                        <div key={i} className="bg-black/20 p-2 rounded flex flex-col gap-2">
+                                                        <div key={i} className="bg-black/20 p-2 rounded flex flex-col gap-2 border border-white/5">
                                                             <div className="flex gap-2">
                                                                 <input value={day.title} onChange={(e) => {
                                                                     const newIt = [...pkg.itinerary]; newIt[i].title = e.target.value;
                                                                     updatePackage(pkg.id, { itinerary: newIt });
-                                                                }} className="w-1/3 bg-transparent border-b border-white/10 text-white text-xs" placeholder="Day Title" />
+                                                                }} className="w-1/3 bg-transparent border-b border-white/10 text-white text-xs outline-none focus:border-gold-400/50" placeholder="Day Title" />
                                                                 <input value={day.subtitle} onChange={(e) => {
                                                                     const newIt = [...pkg.itinerary]; newIt[i].subtitle = e.target.value;
                                                                     updatePackage(pkg.id, { itinerary: newIt });
-                                                                }} className="w-1/3 bg-transparent border-b border-white/10 text-gray-400 text-xs" placeholder="Subtitle" />
+                                                                }} className="w-1/3 bg-transparent border-b border-white/10 text-gray-400 text-xs outline-none focus:border-gold-400/50" placeholder="Subtitle" />
                                                                 <button onClick={() => {
                                                                     const newIt = pkg.itinerary.filter((_, idx) => idx !== i);
                                                                     updatePackage(pkg.id, { itinerary: newIt });
@@ -631,7 +715,31 @@ const Admin: React.FC = () => {
                                                             <textarea value={day.desc} onChange={(e) => {
                                                                 const newIt = [...pkg.itinerary]; newIt[i].desc = e.target.value;
                                                                 updatePackage(pkg.id, { itinerary: newIt });
-                                                            }} className="w-full bg-transparent text-gray-300 text-xs h-10 resize-none outline-none" placeholder="Description"></textarea>
+                                                            }} className="w-full bg-transparent text-gray-300 text-xs h-10 resize-none outline-none border-b border-white/10 focus:border-gold-400/50" placeholder="Description"></textarea>
+
+                                                            {/* Day Image Input */}
+                                                            <div className="flex items-center gap-2 mt-2">
+                                                                <label className="cursor-pointer p-1.5 bg-white/5 border border-white/10 rounded hover:bg-gold-400/10 transition-colors" title="Upload Day Image">
+                                                                    <span className="iconify text-gray-400 hover:text-gold-400 text-sm" data-icon="solar:upload-bold"></span>
+                                                                    <input
+                                                                        type="file"
+                                                                        accept="image/*"
+                                                                        onChange={(e) => handlePackageImageUpload(e, pkg.id, i)}
+                                                                        className="hidden"
+                                                                    />
+                                                                </label>
+                                                                <span className="iconify text-gray-500 text-xs" data-icon="solar:gallery-linear"></span>
+                                                                <input
+                                                                    type="text"
+                                                                    value={day.image || ''}
+                                                                    placeholder="Results in using Main Package Image if empty"
+                                                                    onChange={(e) => {
+                                                                        const newIt = [...pkg.itinerary]; newIt[i].image = e.target.value;
+                                                                        updatePackage(pkg.id, { itinerary: newIt });
+                                                                    }}
+                                                                    className="flex-1 bg-transparent text-blue-300 text-[10px] outline-none placeholder-gray-600 border-b border-transparent focus:border-white/10 transition-colors"
+                                                                />
+                                                            </div>
                                                         </div>
                                                     ))}
                                                 </div>

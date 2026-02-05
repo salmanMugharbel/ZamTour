@@ -146,6 +146,101 @@ export const translations = {
                 fr_prem_2: "Mountain Zipline access",
                 fr_prem_3: "GoPro footage of your trip",
                 fr_prem_4: "Extended deep mountain tour",
+            },
+            custom_packages: {
+                pkg1: {
+                    title: "Almaty Luxury Package – 3 Persons",
+                    subtitle: "5 Days / 4 Nights",
+                    features: [
+                        "City Center Hotel (4 Stars)",
+                        "Daily Breakfast",
+                        "Private Car with Arabic Driver",
+                        "Arabic Translator / Assistant",
+                        "Airport Pick-up & Drop-off"
+                    ],
+                    itinerary: [
+                        { title: "Day 1 | Arrival & Reception", subtitle: "Welcome to Almaty", desc: "Reception at Almaty International Airport. Transfer to the hotel. Free time to rest after travel.", activities: [] },
+                        { title: "Day 2 | City Tour", subtitle: "Exploring Almaty", desc: "Visit Arbat Street, Central Mosque, Panfilov Park. Time dedicated for photography.", activities: [] },
+                        { title: "Day 3 | Snow & Nature", subtitle: "Mountains & Lakes", desc: "Shymbulak Resort (Cable car + snow activities). Big Almaty Lake. Bear Valley.", activities: [] },
+                        { title: "Day 4 | Shopping & Bazaar", subtitle: "Local Markets", desc: "Dostyk Plaza, Mega Center Mall, Green Bazaar (Local Market).", activities: [] },
+                        { title: "Day 5 | Farewell", subtitle: "Departure", desc: "Hotel checkout. Transfer to Almaty Airport. Departure safely.", activities: [] }
+                    ]
+                },
+                pkg2: {
+                    title: "Almaty Luxury Package – 2 Persons",
+                    subtitle: "7 Days / 6 Nights",
+                    features: [
+                        "City Center Hotel (4 Stars)",
+                        "Daily Breakfast",
+                        "Private Car with Arabic Driver",
+                        "Arabic Translator / Assistant",
+                        "Airport Pick-up & Drop-off"
+                    ],
+                    itinerary: [
+                        { title: "Day 1 | Arrival & Reception", subtitle: "Welcome", desc: "Reception at Almaty Airport. Transfer to hotel. Rest after travel.", activities: [] },
+                        { title: "Day 2 | City Tour", subtitle: "Urban Exploration", desc: "Arbat Street, Central Mosque, Panfilov Park, Souvenir photos.", activities: [] },
+                        { title: "Day 3 | Snow & Nature", subtitle: "Mountain Views", desc: "Shymbulak Resort (Cable car & snow games). Big Almaty Lake. Bear Valley.", activities: [] },
+                        { title: "Day 4 | Shopping & City", subtitle: "Modern Almaty", desc: "Dostyk Plaza, Mega Center Mall, Warm cafes in the city center.", activities: [] },
+                        { title: "Day 5 | Mountain Adventures", subtitle: "Light Activities", desc: "Nearby mountain tours. Light snow activities. Nature photoshoot.", activities: [] },
+                        { title: "Day 6 | Relaxation Day", subtitle: "Leisure Time", desc: "Relax at the hotel. Light tours or cafes. Free day for wandering as desired.", activities: [] },
+                        { title: "Day 7 | Farewell", subtitle: "Departure", desc: "Checkout. Transfer to Airport. Arrival safely.", activities: [] }
+                    ]
+                },
+                pkg3: {
+                    title: "Almaty Luxury Package – 2 Persons",
+                    subtitle: "5 Days / 4 Nights",
+                    features: [
+                        "City Center Hotel (4 Stars)",
+                        "Daily Breakfast",
+                        "Private Car with Arabic Driver",
+                        "Arabic Translator",
+                        "Airport Pick-up & Drop-off"
+                    ],
+                    itinerary: [
+                        { title: "Day 1 | Arrival & Reception", subtitle: "Welcome", desc: "Reception at Almaty International Airport. Transfer to hotel. Free time to rest.", activities: [] },
+                        { title: "Day 2 | City Tour", subtitle: "Highlights", desc: "Arbat Street, Central Mosque, Panfilov Park. Time for photography.", activities: [] },
+                        { title: "Day 3 | Snow & Nature", subtitle: "Adventure", desc: "Shymbulak Resort (Cable car + activities). Big Almaty Lake. Bear Valley.", activities: [] },
+                        { title: "Day 4 | Shopping & Bazaar", subtitle: "Markets", desc: "Dostyk Plaza, Mega Center Mall, Green Bazaar.", activities: [] },
+                        { title: "Day 5 | Farewell", subtitle: "Departure", desc: "Hotel checkout. Transfer to Almaty Airport. Safe departure.", activities: [] }
+                    ]
+                },
+                pkg4: {
+                    title: "Almaty Package – 2 Persons",
+                    subtitle: "4 Days / 3 Nights",
+                    features: [
+                        "City Center Hotel (4 Stars)",
+                        "Daily Breakfast",
+                        "Private Car with Driver",
+                        "Arabic Translator / Assistant",
+                        "Airport Pick-up & Drop-off"
+                    ],
+                    itinerary: [
+                        { title: "Day 1 | Arrival & Winter Vibes", subtitle: "Welcome", desc: "Reception at Almaty Airport. Transfer to Hotel (City Center). Rest.", activities: [] },
+                        { title: "Day 2 | Snow World – Shymbulak", subtitle: "Mountains", desc: "Shymbulak Resort (Closest snow area). Cable car ride amidst white mountains. Snow games, walking, photography. Warm drinks with snow view. Return to hotel in evening.", activities: [] },
+                        { title: "Day 3 | Nearby Natural Snow", subtitle: "Lakes & Valleys", desc: "Big Almaty Lake (Snow and breathtaking views). Bear Valley in winter vibes. Photoshoot amidst snow. Warm mountain cafe. Return to hotel.", activities: [] },
+                        { title: "Day 4 | Departure", subtitle: "Farewell", desc: "Checkout. Transfer to Airport. Successful trip God willing.", activities: [] }
+                    ]
+                },
+                pkg5: {
+                    title: "Almaty Luxury Package – 3 Persons",
+                    subtitle: "7 Days / 6 Nights",
+                    features: [
+                        "City Center Hotel (4 Stars)",
+                        "Daily Breakfast",
+                        "Private Car with Arabic Driver",
+                        "Arabic Translator / Assistant",
+                        "Airport Pick-up & Drop-off"
+                    ],
+                    itinerary: [
+                        { title: "Day 1 | Arrival & Reception", subtitle: "Welcome", desc: "Reception at Almaty International Airport. Transfer to hotel. Free time for rest.", activities: [] },
+                        { title: "Day 2 | City Tour", subtitle: "Culture", desc: "Arbat Street, Central Mosque, Panfilov Park. Time dedicated for photography.", activities: [] },
+                        { title: "Day 3 | Snow & Nature", subtitle: "Mountains", desc: "Shymbulak Resort (Cable car + snow activities). Big Almaty Lake. Bear Valley.", activities: [] },
+                        { title: "Day 4 | Shopping & Popular Bazaar", subtitle: "Local Life", desc: "Dostyk Plaza, Mega Center Mall, Green Bazaar (Popular Market).", activities: [] },
+                        { title: "Day 5 | Mountain Adventures", subtitle: "Light Activity", desc: "Nearby mountain tours. Light snow activities. Nature photoshoot.", activities: [] },
+                        { title: "Day 6 | Almaty City Tour", subtitle: "Panorama", desc: "Kok Tobe Hill (Cable car + panoramic view). President Park. Gorky Park (Light activities). Special photo spots inside the city.", activities: [] },
+                        { title: "Day 7 | Farewell & Departure", subtitle: "Safe Travels", desc: "Checkout from hotel. Transfer to Airport. Departure safely.", activities: [] }
+                    ]
+                }
             }
         },
         about: {
@@ -459,6 +554,101 @@ export const translations = {
                 fr_prem_2: "Доступ к горному зиплайну",
                 fr_prem_3: "Съемка поездки на GoPro",
                 fr_prem_4: "Расширенный горный тур",
+            },
+            custom_packages: {
+                pkg1: {
+                    title: "Алматы Люкс Пакет – 3 Персоны",
+                    subtitle: "5 Дней / 4 Ночи",
+                    features: [
+                        "Отель в центре города (4 звезды)",
+                        "Ежедневный завтрак",
+                        "Личный автомобиль с водителем",
+                        "Переводчик / Ассистент",
+                        "Трансфер из/в аэропорт Алматы"
+                    ],
+                    itinerary: [
+                        { title: "День 1 | Прибытие и Встреча", subtitle: "Добро пожаловать", desc: "Встреча в международном аэропорту Алматы. Трансфер в отель. Свободное время для отдыха.", activities: [] },
+                        { title: "День 2 | Обзорная экскурсия", subtitle: "Исследование города", desc: "Улица Арбат, Центральная мечеть, Парк Панфилова. Время для фото.", activities: [] },
+                        { title: "День 3 | Снег и Природа", subtitle: "Горы и Озера", desc: "Курорт Шымбулак (канатная дорога + снежные развлечения). Большое Алматинское озеро. Медвежье ущелье.", activities: [] },
+                        { title: "День 4 | Шопинг и Базар", subtitle: "Местные рынки", desc: "Dostyk Plaza, Mega Center Mall, Зеленый базар (Местный рынок).", activities: [] },
+                        { title: "День 5 | Прощание", subtitle: "Вылет", desc: "Выселение из отеля. Трансфер в аэропорт Алматы. Благополучный вылет.", activities: [] }
+                    ]
+                },
+                pkg2: {
+                    title: "Алматы Люкс Пакет – 2 Персоны",
+                    subtitle: "7 Дней / 6 Ночей",
+                    features: [
+                        "Отель в центре города (4 звезды)",
+                        "Ежедневный завтрак",
+                        "Личный автомобиль с водителем",
+                        "Переводчик / Ассистент",
+                        "Трансфер из/в аэропорт Алматы"
+                    ],
+                    itinerary: [
+                        { title: "День 1 | Прибытие и Встреча", subtitle: "Добро пожаловать", desc: "Встреча в аэропорту Алматы. Трансфер в отель. Отдых после перелета.", activities: [] },
+                        { title: "День 2 | Обзорная экскурсия", subtitle: "Город", desc: "Улица Арбат, Центральная мечеть, Парк Панфилова, памятные фото.", activities: [] },
+                        { title: "День 3 | Снег и Природа", subtitle: "Горные виды", desc: "Курорт Шымбулак (канатная дорога и снежные игры). Большое Алматинское озеро. Медвежье ущелье.", activities: [] },
+                        { title: "День 4 | Шопинг и Город", subtitle: "Современный Алматы", desc: "Dostyk Plaza, Mega Center Mall, Уютные кафе в центре города.", activities: [] },
+                        { title: "День 5 | Горные приключения", subtitle: "Легкий отдых", desc: "Туры в близлежащие горы. Легкие снежные развлечения. Фотосессия на природе.", activities: [] },
+                        { title: "День 6 | День Релакса", subtitle: "Свободное время", desc: "Отдых в отеле. Легкие прогулки или кафе. Свободный день по желанию.", activities: [] },
+                        { title: "День 7 | Прощание", subtitle: "Вылет", desc: "Выселение. Трансфер в аэропорт. Благополучное прибытие.", activities: [] }
+                    ]
+                },
+                pkg3: {
+                    title: "Алматы Люкс Пакет – 2 Персоны",
+                    subtitle: "5 Дней / 4 Ночи",
+                    features: [
+                        "Отель в центре города (4 звезды)",
+                        "Ежедневный завтрак",
+                        "Личный автомобиль с водителем",
+                        "Переводчик",
+                        "Трансфер из/в аэропорт Алматы"
+                    ],
+                    itinerary: [
+                        { title: "День 1 | Прибытие и Встреча", subtitle: "Добро пожаловать", desc: "Встреча в международном аэропорту Алматы. Трансфер в отель. Свободное время.", activities: [] },
+                        { title: "День 2 | Обзорная экскурсия", subtitle: "Алматы", desc: "Улица Арбат, Центральная мечеть, Парк Панфилова. Время для фото.", activities: [] },
+                        { title: "День 3 | Снег и Природа", subtitle: "Приключения", desc: "Курорт Шымбулак (канатная дорога + развлечения). Большое Алматинское озеро. Медвежье ущелье.", activities: [] },
+                        { title: "День 4 | Шопинг и Базар", subtitle: "Рынки", desc: "Dostyk Plaza, Mega Center Mall, Зеленый базар.", activities: [] },
+                        { title: "День 5 | Прощание", subtitle: "Вылет", desc: "Выселение из отеля. Трансфер в аэропорт Алматы. Безопасный вылет.", activities: [] }
+                    ]
+                },
+                pkg4: {
+                    title: "Алматы Пакет – 2 Персоны",
+                    subtitle: "4 Дня / 3 Ночи",
+                    features: [
+                        "Отель в центре города (4 звезды)",
+                        "Ежедневный завтрак",
+                        "Личный автомобиль с водителем",
+                        "Переводчик / Ассистент",
+                        "Трансфер из/в аэропорт Алматы"
+                    ],
+                    itinerary: [
+                        { title: "День 1 | Прибытие и Зимняя Атмосфера", subtitle: "Встреча", desc: "Встреча в аэропорту Алматы. Трансфер в отель (Центр). Отдых.", activities: [] },
+                        { title: "День 2 | Мир Снега – Шымбулак", subtitle: "Горы", desc: "Курорт Шымбулак. Канатная дорога среди белых гор. Снежные игры, прогулки, фото. Горячие напитки с видом. Возвращение в отель вечером.", activities: [] },
+                        { title: "День 3 | Природный Снег", subtitle: "Озера и Долины", desc: "Большое Алматинское озеро (Снег и захватывающие виды). Медвежье ущелье. Фотосессия среди снегов. Теплое горное кафе. Возвращение в отель.", activities: [] },
+                        { title: "День 4 | Вылет", subtitle: "Прощание", desc: "Выселение. Трансфер в аэропорт. Удачной поездки.", activities: [] }
+                    ]
+                },
+                pkg5: {
+                    title: "Алматы Люкс Пакет – 3 Персоны",
+                    subtitle: "7 Дней / 6 Ночей",
+                    features: [
+                        "Отель в центре города (4 звезды)",
+                        "Ежедневный завтрак",
+                        "Личный автомобиль с водителем",
+                        "Переводчик / Ассистент",
+                        "Трансфер из/в аэропорт Алматы"
+                    ],
+                    itinerary: [
+                        { title: "День 1 | Прибытие и Встреча", subtitle: "Добро пожаловать", desc: "Встреча в международном аэропорту Алматы. Трансфер в отель. Свободное время для отдыха.", activities: [] },
+                        { title: "День 2 | Обзорная экскурсия", subtitle: "Культура", desc: "Улица Арбат, Центральная мечеть, Парк Панфилова. Время для фото.", activities: [] },
+                        { title: "День 3 | Снег и Природа", subtitle: "Горы", desc: "Курорт Шымбулак (канатная дорога + снежные развлечения). Большое Алматинское озеро. Медвежье ущелье.", activities: [] },
+                        { title: "День 4 | Шопинг и Популярный Базар", subtitle: "Местная жизнь", desc: "Dostyk Plaza, Mega Center Mall, Зеленый базар.", activities: [] },
+                        { title: "День 5 | Горные Приключения", subtitle: "Легкая активность", desc: "Туры в близлежащие горы. Легкие снежные развлечения. Фотосессия на природе.", activities: [] },
+                        { title: "День 6 | Экскурсия по Алматы", subtitle: "Панорама", desc: "Гора Кок-Тобе (канатная дорога + панорамный вид). Парк Президента. Парк Горького. Особые места для фото в городе.", activities: [] },
+                        { title: "День 7 | Прощание и Вылет", subtitle: "Безопасного пути", desc: "Выселение из отеля. Трансфер в аэропорт. Благополучный вылет.", activities: [] }
+                    ]
+                }
             }
         },
         about: {
@@ -772,6 +962,103 @@ export const translations = {
                 fr_prem_2: "دخول الزيبلاين الجبلي",
                 fr_prem_3: "تصوير الرحلة بـ GoPro",
                 fr_prem_4: "جولة جبلية موسعة",
+            },
+            custom_packages: {
+                pkg1: {
+                    title: "بكج ألماتي الفاخر | كازاخستان – 3 أشخاص",
+                    subtitle: "5 أيام / 4 ليالي",
+                    features: [
+                        "فندق فاخر في سنتر المدينة + فطور يومي",
+                        "سيارة خاصة حديثة مع سائق عربي",
+                        "مترجم عربي مرافق",
+                        "استقبال وتوديع من وإلى مطار ألماتي"
+                    ],
+                    inclusions: [
+                        { title: "فندق فاخر", desc: "إقامة وسط المدينة" },
+                        { title: "فطور يومي", desc: "مشمول" },
+                        { title: "سيارة خاصة", desc: "مع سائق عربي" },
+                        { title: "مترجم", desc: "مساعد عربي" },
+                        { title: "نقل المطار", desc: "استقبال وتوديع" }
+                    ],
+                    itinerary: [
+                        { title: "اليوم 1 | الوصول واالستقبال", subtitle: "مرحباً بكم", desc: "استقبال من مطار ألماتي الدولي. التوصيل إلى الفندق. وقت حر للراحة بعد السفر.", activities: [] },
+                        { title: "اليوم 2 | جولة المدينة", subtitle: "استكشاف ألماتي", desc: "شارع أربات، المسجد المركزي، حديقة بانفلوف. وقت مخصص للتصوير.", activities: [] },
+                        { title: "اليوم 3 | الثلج والطبيعة", subtitle: "جبال وبحيرات", desc: "منتجع شيمبوالك (تلفريك + أنشطة ثلجية). بحيرة ألماتي الكبيرة. وادي الدببة.", activities: [] },
+                        { title: "اليوم 4 | التسوق والبازار الشعبي", subtitle: "الأسواق المحلية", desc: "دوستيك بالزا، ميغا سنتر مول، البازار الأخضر (السوق الشعبي).", activities: [] },
+                        { title: "اليوم 5 | التوديع والمغادرة", subtitle: "مع السلامة", desc: "تسجيل الخروج من الفندق. التوصيل إلى مطار ألماتي. المغادرة بسلامة الله.", activities: [] }
+                    ]
+                },
+                pkg2: {
+                    title: "بكج ألماتي الفاخر | كازاخستان",
+                    subtitle: "7 أيام / 6 ليالي",
+                    features: [
+                        "فندق في سنتر المدينة + فطور يومي (4 نجوم)",
+                        "سيارة خاصة مع سائق عربي",
+                        "مترجم عربي مرافق",
+                        "استقبال وتوديع"
+                    ],
+                    itinerary: [
+                        { title: "اليوم 1 | الوصول واالستقبال", subtitle: "مرحباً", desc: "استقبال من مطار ألماتي. التوصيل للفندق. استراحة بعد السفر.", activities: [] },
+                        { title: "اليوم 2 | جولة المدينة", subtitle: "معالم المدينة", desc: "شارع أربات، المسجد المركزي، حديقة بانفلوف، صور تذكارية.", activities: [] },
+                        { title: "اليوم 3 | الثلج والطبيعة", subtitle: "مغامرة ثلجية", desc: "منتجع شيمبوالك (تلفريك وألعاب ثلج). بحيرة ألماتي الكبيرة. وادي الدببة.", activities: [] },
+                        { title: "اليوم 4 | التسوق واستكشاف المدينة", subtitle: "تسوق ومقاهي", desc: "دوستيك بالزا، ميغا سنتر مول، كافيهات دافئة وسط المدينة.", activities: [] },
+                        { title: "اليوم 5 | مغامرات جبلية خفيفة", subtitle: "أنشطة", desc: "جولات جبلية قريبة. أنشطة ثلجية خفيفة. جلسة تصوير طبيعية.", activities: [] },
+                        { title: "اليوم 6 | يوم استرخاء", subtitle: "راحة", desc: "استرخاء في الفندق. جولات خفيفة أو كافيهات. يوم حر للتجول حسب الرغبة.", activities: [] },
+                        { title: "اليوم 7 | التوديع", subtitle: "المغادرة", desc: "تسجيل الخروج. التوصيل إلى المطار. الوصول بسلامة.", activities: [] }
+                    ]
+                },
+                pkg3: {
+                    title: "بكج ألماتي الفاخر | كازاخستان – شخصان",
+                    subtitle: "5 أيام / 4 ليالي",
+                    features: [
+                        "فندق فاخر في سنتر المدينة + فطور يومي",
+                        "سيارة خاصة حديثة مع سائق عربي",
+                        "مترجم عربي مرافق",
+                        "استقبال وتوديع"
+                    ],
+                    itinerary: [
+                        { title: "اليوم 1 | الوصول واالستقبال", subtitle: "مرحباً", desc: "استقبال من مطار ألماتي الدولي. التوصيل إلى الفندق. وقت حر للراحة بعد السفر.", activities: [] },
+                        { title: "اليوم 2 | جولة المدينة", subtitle: "ألماتي", desc: "شارع أربات، المسجد المركزي، حديقة بانفلوف. وقت مخصص للتصوير.", activities: [] },
+                        { title: "اليوم 3 | الثلج والطبيعة", subtitle: "طبيعة خلابة", desc: "منتجع شيمبوالك (تلفريك + أنشطة ثلجية). بحيرة ألماتي الكبيرة. وادي الدببة.", activities: [] },
+                        { title: "اليوم 4 | التسوق والبازار الشعبي", subtitle: "الأسواق", desc: "دوستيك بالزا، ميغا سنتر مول، البازار الأخضر (السوق الشعبي).", activities: [] },
+                        { title: "اليوم 5 | التوديع والمغادرة", subtitle: "رحلة سعيدة", desc: "تسجيل الخروج من الفندق. التوصيل إلى مطار ألماتي. المغادرة بسلامة الله.", activities: [] }
+                    ]
+                },
+                pkg4: {
+                    title: "بكج ألماتي | كازاخستان – شخصان",
+                    subtitle: "4 أيام / 3 ليالي",
+                    features: [
+                        "فندق سنتر المدينة + فطور (4 نجوم)",
+                        "سيارة خاصة مع سائق",
+                        "مترجم عربي مرافق",
+                        "استقبال وتوديع"
+                    ],
+                    itinerary: [
+                        { title: "اليوم 1 | الوصول وأجواء شتوية", subtitle: "استقبال", desc: "استقبال من مطار ألماتي. التوصيل إلى الفندق (سنتر المدينة). استراحة.", activities: [] },
+                        { title: "اليوم 2 | عالم الثلج – شيمبوالك", subtitle: "جبال", desc: "منتجع شيمبوالك (أقرب منطقة ثلج). ركوب التلفريك وسط الجبال البيضاء. ألعاب ثلج – تمشية – تصوير. مشروبات دافئة بإطلالة ثلج. العودة للفندق مساءً.", activities: [] },
+                        { title: "اليوم 3 | ثلوج طبيعية قريبة", subtitle: "طبيعة", desc: "بحيرة ألماتي الكبيرة (ثلج ومناظر خلابة). وادي الدببة بأجواء شتوية. جلسة تصوير وسط الثلوج. كافيه جبلي دافئ. عودة للفندق.", activities: [] },
+                        { title: "اليوم 4 | المغادرة", subtitle: "وداعاً", desc: "تسجيل الخروج. التوصيل إلى المطار. رحلة موفقة بإذن الله.", activities: [] }
+                    ]
+                },
+                pkg5: {
+                    title: "بكج ألماتي الفاخر | كازاخستان – 3 أشخاص",
+                    subtitle: "7 أيام / 6 ليالي",
+                    features: [
+                        "فندق فاخر في سنتر المدينة + فطور يومي",
+                        "سيارة خاصة حديثة مع سائق عربي",
+                        "مترجم عربي مرافق",
+                        "استقبال وتوديع"
+                    ],
+                    itinerary: [
+                        { title: "اليوم 1 | الوصول واالستقبال", subtitle: "أهلاً وسهلاً", desc: "استقبال من مطار ألماتي الدولي. التوصيل إلى الفندق. وقت حر للراحة بعد السفر.", activities: [] },
+                        { title: "اليوم 2 | جولة المدينة", subtitle: "تاريخ وثقافة", desc: "شارع أربات، المسجد المركزي، حديقة بانفلوف. وقت مخصص للتصوير.", activities: [] },
+                        { title: "اليوم 3 | الثلج والطبيعة", subtitle: "مرتفعات", desc: "منتجع شيمبوالك (تلفريك + أنشطة ثلجية). بحيرة ألماتي الكبيرة. وادي الدببة.", activities: [] },
+                        { title: "اليوم 4 | التسوق والبازار الشعبي", subtitle: "أسواق", desc: "دوستيك بالزا، ميغا سنتر مول، البازار الأخضر (السوق الشعبي).", activities: [] },
+                        { title: "اليوم 5 | مغامرات جبلية خفيفة", subtitle: "استكشاف", desc: "جولات جبلية قريبة. أنشطة ثلجية خفيفة. جلسة تصوير في الطبيعة.", activities: [] },
+                        { title: "اليوم 6 | جولة سياحية داخل ألماتي", subtitle: "معالم", desc: "تلة كوك توبي (تلفريك + إطلالة بانورامية). حديقة الرئيس. غوركي بارك (أنشطة خفيفة). مواقع تصوير مميزة داخل المدينة.", activities: [] },
+                        { title: "اليوم 7 | التوديع والمغادرة", subtitle: "المغادرة", desc: "تسجيل الخروج من الفندق. التوصيل إلى المطار. المغادرة بسلامة الله.", activities: [] }
+                    ]
+                }
             }
         },
         about: {

@@ -3,6 +3,7 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '../LanguageContext';
 import { useData } from '../DataContext';
+import PackageCard from '../components/PackageCard';
 
 const Packages: React.FC = () => {
     const navigate = useNavigate();
@@ -32,71 +33,41 @@ const Packages: React.FC = () => {
         if (items.length === 0) return null;
 
         return (
-            <section className="mb-20 animate-on-scroll">
-                <div className="flex items-center gap-4 mb-8">
-                    <div className={`w-12 h-12 rounded-full flex items-center justify-center ${iconColorClass.replace('text-', 'bg-').replace('400', '500/20')} ${iconColorClass}`}>
-                        <span className="iconify w-6 h-6" data-icon={icon}></span>
-                    </div>
-                    <h2 className="text-2xl md:text-3xl font-bold text-white">{title}</h2>
+            <section className="mb-16 animate-on-scroll">
+                <div className="flex items-center gap-3 mb-8 px-2">
+                    {/* <div className={`w-10 h-10 rounded-full flex items-center justify-center ${iconColorClass.replace('text-', 'bg-').replace('400', '500/10')} ${iconColorClass}`}>
+                        <span className="iconify w-5 h-5" data-icon={icon}></span>
+                    </div> */}
+                    <h2 className="text-2xl md:text-3xl font-bold text-[#1B1464]">{title}</h2>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-8">
-                    {items.map((pkg) => (
-                        <div key={pkg.id} className={`spotlight-wrapper rounded-3xl p-[1px] ${pkg.tier === 'premium' ? 'premium-border' : ''}`}>
-                            <div className={`spotlight-content p-8 flex flex-col h-full ${pkg.tier === 'premium' ? 'bg-gradient-to-b from-[#2a2455] to-[#1B1464]' : 'bg-[#1B1464]/90'}`}>
-                                <div className={`mb-4 text-xs font-bold uppercase tracking-widest flex items-center gap-2 ${pkg.tier === 'premium' ? 'text-gold-400' : 'text-gray-400'}`}>
-                                    {pkg.tier === 'premium' && <span className="iconify" data-icon="solar:crown-star-bold"></span>}
-                                    {/* @ts-ignore */}
-                                    {t.packages[pkg.type === 'couples' && pkg.tier === 'premium' ? 'vip' :
-                                        pkg.type === 'couples' ? 'couples' :
-                                            pkg.type === 'family' && pkg.tier === 'premium' ? 'family' :
-                                                pkg.type === 'family' ? 'family' :
-                                                    pkg.type === 'friends' ? 'friends' : 'standard']}
-                                </div>
-                                <h3 className="text-2xl font-bold text-white mb-6">
-                                    {/* @ts-ignore */}
-                                    {t.packages[`${pkg.type}_${pkg.tier === 'premium' ? 'prem_' : ''}title`]}
-                                </h3>
-                                <ul className="space-y-4 mb-8 flex-1">
-                                    {pkg.features.map((feat, i) => {
-                                        // Construct translation key based on package type and tier/index
-                                        // Simplified mapping logic:
-                                        // couples standard -> c_std_1..5
-                                        // couples premium -> c_prem_1..4
-                                        const typePrefix = pkg.type === 'couples' ? 'c' : pkg.type === 'family' ? 'f' : 'fr';
-                                        const tierPrefix = pkg.tier === 'premium' ? 'prem' : 'std';
-                                        const key = `${typePrefix}_${tierPrefix}_${i + 1}`;
-                                        // @ts-ignore
-                                        const translatedFeat = t.packages.features[key];
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {items.map((pkg) => {
+                        // Resolve dynamic translation for title
+                        // @ts-ignore
+                        const translatedTitle = t.packages[`${pkg.type}_${pkg.tier === 'premium' ? 'prem_' : ''}title`] || pkg.title;
 
-                                        return (
-                                            <li key={i} className={`flex items-start gap-3 text-sm ${pkg.tier === 'premium' ? 'text-white' : 'text-gray-300'}`}>
-                                                <span className={`iconify mt-0.5 text-lg ${pkg.tier === 'premium' ? 'text-gold-400' : 'text-gold-400'}`} data-icon={pkg.tier === 'premium' ? "solar:star-bold-duotone" : "solar:check-circle-bold-duotone"}></span>
-                                                {translatedFeat || feat}
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                                <div className="border-t border-white/10 pt-6 flex justify-between items-center">
-                                    <div>
-                                        <span className="text-sm text-gray-400">{t.packages.starting_from}</span>
-                                        <div className={`text-2xl font-bold ${pkg.tier === 'premium' ? 'text-gold-400' : 'text-white'}`}>
-                                            ${pkg.price}<span className="text-xs font-normal text-gray-300">{pkg.priceLabel}</span>
-                                        </div>
-                                    </div>
-                                    <button
-                                        onClick={() => handleSelect(pkg.id)}
-                                        className={`${pkg.tier === 'premium'
-                                            ? 'bg-gold-400 text-[#1B1464] hover:bg-white shadow-lg'
-                                            : 'bg-white/10 hover:bg-gold-400 hover:text-[#1B1464] text-white'} 
-                                            px-6 py-2 rounded-full font-bold transition-colors`}
-                                    >
-                                        {t.packages.select}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+                        // Determine duration text (using subtitle as it often contains duration, or fallback)
+                        // The existing subtitles in translations are like "Standard", "Premium", "7 Days" etc.
+                        // We might need a better source for duration if it's not consistent. 
+                        // For custom packages, it's correct. For standard ones, let's use a generic string or mapped value if available.
+                        // But for now, we'll try to use the subtitle if it looks like a duration, or fallback to the itinerary length.
+                        const duration = pkg.subtitle.includes('Days') ? pkg.subtitle : `${pkg.itinerary?.length || 5} Days`;
+
+                        return (
+                            <PackageCard
+                                key={pkg.id}
+                                id={pkg.id}
+                                title={translatedTitle}
+                                image={pkg.image}
+                                price={pkg.price}
+                                priceLabel={pkg.priceLabel}
+                                duration={duration}
+                                tier={pkg.tier}
+                                onSelect={handleSelect}
+                            />
+                        );
+                    })}
                 </div>
             </section>
         );
@@ -104,19 +75,20 @@ const Packages: React.FC = () => {
 
     return (
         <div className="w-full">
-            <section className="relative h-[60vh] md:h-[70vh] flex flex-col justify-center items-center overflow-hidden">
+            {/* Hero Section - Reduced height for better flow */}
+            <section className="relative h-[40vh] md:h-[50vh] flex flex-col justify-center items-center overflow-hidden">
                 <div className="absolute inset-0 z-0">
                     <img src="https://welcome.shymbulak.com/wp-content/uploads/2024/11/cb8654049f3cbf379a15e6b31a8d0aab-scaled.jpg"
                         alt="Shymbulak Packages"
                         className="w-full h-full object-cover object-center" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1B1464] via-[#1B1464]/30 to-transparent"></div>
+                    <div className="absolute inset-0 bg-black/40"></div>
                 </div>
 
-                <div className="text-center z-10 max-w-4xl px-4 mt-20 animate-on-scroll">
-                    <h1 className="text-4xl md:text-7xl font-extrabold text-white mb-6 drop-shadow-2xl">
+                <div className="text-center z-10 max-w-4xl px-4 mt-10 animate-on-scroll">
+                    <h1 className="text-3xl md:text-6xl font-extrabold text-white mb-4 drop-shadow-xl">
                         {t.packages.title} <span className="text-gold-400">{t.packages.title_highlight}</span>
                     </h1>
-                    <p className="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto font-medium drop-shadow-md">
+                    <p className="text-gray-100 text-lg md:text-xl max-w-2xl mx-auto font-medium">
                         {t.packages.subtitle}
                     </p>
                 </div>
@@ -124,15 +96,15 @@ const Packages: React.FC = () => {
 
             {/* Inquiry Mode Banner */}
             {isInquiryMode && (
-                <div className="bg-gold-400 text-[#1B1464] py-4 px-4 text-center font-bold text-lg sticky top-20 z-40 shadow-lg animate-pulse">
+                <div className="bg-gold-400 text-[#1B1464] py-3 px-4 text-center font-bold sticky top-16 z-40 shadow-md">
                     Please complete choosing your package to proceed with your inquiry.
                 </div>
             )}
 
-            <main className="py-20 px-4 md:px-8 max-w-6xl mx-auto">
-                {renderPackageSection(t.packages.couples, "solar:heart-angle-bold-duotone", "text-pink-400", couplesPackages)}
-                {renderPackageSection(t.packages.family, "solar:users-group-rounded-bold-duotone", "text-green-400", familyPackages)}
-                {renderPackageSection(t.packages.friends, "solar:glass-cheers-bold-duotone", "text-blue-400", friendsPackages)}
+            <main className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
+                {renderPackageSection(t.packages.couples, "solar:heart-angle-bold-duotone", "text-pink-500", couplesPackages)}
+                {renderPackageSection(t.packages.family, "solar:users-group-rounded-bold-duotone", "text-green-500", familyPackages)}
+                {renderPackageSection(t.packages.friends, "solar:glass-cheers-bold-duotone", "text-blue-500", friendsPackages)}
             </main>
         </div>
     );
