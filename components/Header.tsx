@@ -59,15 +59,13 @@ const Header: React.FC = () => {
                     {/* Right: Hamburger Menu */}
                     <div className="flex-1 flex justify-end gap-4 z-50">
                         {/* Book Now - Hidden on mobile */}
-                        <a
-                            href={`https://wa.me/${settings?.whatsappNumber || "77477577971"}?text=${encodeURIComponent("Hello ZamTour! I want to inquire about booking a tour.")}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <Link
+                            to="/packages"
                             className="hidden md:flex bg-gold-400 text-[#1B1464] px-4 md:px-6 py-2 rounded-full font-bold hover:bg-white transition-colors shadow-lg text-xs md:text-sm items-center gap-2 whitespace-nowrap"
                         >
                             <span>{t.nav.book}</span>
                             <span className="iconify" data-icon="solar:arrow-right-linear"></span>
-                        </a>
+                        </Link>
 
                         <button onClick={toggleMenu} className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-gold-400 hover:text-[#1B1464] transition-colors shadow-lg">
                             <span className="iconify w-6 h-6" data-icon="solar:hamburger-menu-linear"></span>

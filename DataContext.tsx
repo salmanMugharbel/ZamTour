@@ -16,6 +16,7 @@ export interface PackageDay {
     subtitle: string;
     desc: string;
     activities: string[];
+    image?: string; // Optional image for specific day
 }
 
 export interface Package {
@@ -59,6 +60,8 @@ interface DataContextType {
 
     packages: Package[];
     updatePackage: (id: string, updates: Partial<Package>) => void;
+    addPackage: (pkg: Package) => void;
+    deletePackage: (id: string) => void;
 
     prices: PackagePrices;
     updatePrice: (key: keyof PackagePrices, value: number) => void;
@@ -132,6 +135,138 @@ const seedPackagesFromTranslations = (): Package[] => {
             image: "https://welcome.shymbulak.com/wp-content/uploads/2024/11/cb8654049f3cbf379a15e6b31a8d0aab-scaled.jpg",
             features: [t.features.fr_prem_1, t.features.fr_prem_2, t.features.fr_prem_3, t.features.fr_prem_4],
             inclusions: createInclusions(), itinerary: createItinerary(), cancellationPolicy: mp.cancellation
+        },
+        {
+            id: 'pkg1', type: 'family', tier: 'premium',
+            // @ts-ignore
+            title: t.custom_packages.pkg1.title, subtitle: t.custom_packages.pkg1.subtitle, price: 990, priceLabel: mp.total_price,
+            image: "https://welcome.shymbulak.com/wp-content/uploads/2024/11/cb8654049f3cbf379a15e6b31a8d0aab-scaled.jpg",
+            // @ts-ignore
+            features: t.custom_packages.pkg1.features,
+            // @ts-ignore
+            inclusions: createInclusions(), itinerary: t.custom_packages.pkg1.itinerary, cancellationPolicy: mp.cancellation
+        },
+        {
+            id: 'pkg2', type: 'couples', tier: 'premium',
+            // @ts-ignore
+            title: t.custom_packages.pkg2.title, subtitle: t.custom_packages.pkg2.subtitle, price: 1150, priceLabel: mp.total_price,
+            image: "https://welcome.shymbulak.com/wp-content/uploads/2024/11/cb8654049f3cbf379a15e6b31a8d0aab-scaled.jpg",
+            // @ts-ignore
+            features: t.custom_packages.pkg2.features,
+            // @ts-ignore
+            inclusions: createInclusions(), itinerary: t.custom_packages.pkg2.itinerary, cancellationPolicy: mp.cancellation
+        },
+        {
+            id: 'pkg3', type: 'couples', tier: 'standard',
+            // @ts-ignore
+            title: t.custom_packages.pkg3.title, subtitle: t.custom_packages.pkg3.subtitle, price: 750, priceLabel: mp.total_price,
+            image: "https://welcome.shymbulak.com/wp-content/uploads/2024/11/cb8654049f3cbf379a15e6b31a8d0aab-scaled.jpg",
+            // @ts-ignore
+            features: t.custom_packages.pkg3.features,
+            // @ts-ignore
+            inclusions: createInclusions(), itinerary: t.custom_packages.pkg3.itinerary, cancellationPolicy: mp.cancellation
+        },
+        {
+            id: 'pkg4', type: 'couples', tier: 'standard',
+            // @ts-ignore
+            title: t.custom_packages.pkg4.title, subtitle: t.custom_packages.pkg4.subtitle, price: 550, priceLabel: mp.total_price,
+            image: "https://welcome.shymbulak.com/wp-content/uploads/2024/11/cb8654049f3cbf379a15e6b31a8d0aab-scaled.jpg",
+            // @ts-ignore
+            features: t.custom_packages.pkg4.features,
+            // @ts-ignore
+            inclusions: createInclusions(), itinerary: t.custom_packages.pkg4.itinerary, cancellationPolicy: mp.cancellation
+        },
+        {
+            id: 'pkg5', type: 'family', tier: 'premium',
+            // @ts-ignore
+            title: t.custom_packages.pkg5.title, subtitle: t.custom_packages.pkg5.subtitle, price: 1510, priceLabel: mp.total_price,
+            image: "https://welcome.shymbulak.com/wp-content/uploads/2024/11/cb8654049f3cbf379a15e6b31a8d0aab-scaled.jpg",
+            // @ts-ignore
+            features: t.custom_packages.pkg5.features,
+            // @ts-ignore
+            inclusions: createInclusions(), itinerary: t.custom_packages.pkg5.itinerary, cancellationPolicy: mp.cancellation
+        },
+        {
+            id: 'almaty_luxury_3p', type: 'family', tier: 'premium',
+            title: 'Almaty Luxury Package – 3 Persons 🇰🇿',
+            subtitle: '5 Days / 4 Nights',
+            price: 990,
+            priceLabel: 'from',
+            image: "https://welcome.shymbulak.com/wp-content/uploads/2024/11/cb8654049f3cbf379a15e6b31a8d0aab-scaled.jpg",
+            features: [
+                'Luxury hotel in the city center',
+                'Daily breakfast',
+                'Private modern car with Arabic-speaking driver',
+                'Arabic translator / assistant',
+                'Airport pick-up & drop-off (Almaty)',
+                '3 sightseeing tours'
+            ],
+            inclusions: [
+                { icon: 'solar:bed-bold-duotone', title: 'Luxury Hotel', desc: 'City center stay' },
+                { icon: 'solar:cup-hot-bold-duotone', title: 'Daily Breakfast', desc: 'Included' },
+                { icon: 'solar:car-bold-duotone', title: 'Private Car', desc: 'With Arabic driver' },
+                { icon: 'solar:user-speak-bold-duotone', title: 'Translator', desc: 'Arabic assistant' },
+                { icon: 'solar:plane-bold-duotone', title: 'Airport Transfer', desc: 'Pick-up & Drop-off' }
+            ],
+            itinerary: [
+                {
+                    title: 'Arrival & Welcome',
+                    subtitle: 'Day 1',
+                    desc: 'Meet & greet at Almaty International Airport. Transfer to the hotel. Free time to rest after travel.',
+                    image: '',
+                    activities: [
+                        'Meet & greet at Almaty International Airport',
+                        'Transfer to the hotel',
+                        'Free time to rest after travel'
+                    ]
+                },
+                {
+                    title: 'City Tour',
+                    subtitle: 'Day 2',
+                    desc: 'Explore the city highlights including Arbat Street and Panfilov Park.',
+                    image: '',
+                    activities: [
+                        'Arbat Street',
+                        'Central Mosque',
+                        'Panfilov Park',
+                        'Free time for photography'
+                    ]
+                },
+                {
+                    title: 'Snow & Nature',
+                    subtitle: 'Day 3',
+                    desc: 'A trip to the beautiful Shymbulak Ski Resort and Big Almaty Lake.',
+                    image: '',
+                    activities: [
+                        'Shymbulak Ski Resort (Cable car + snow activities)',
+                        'Big Almaty Lake',
+                        'Bear Gorge Valley'
+                    ]
+                },
+                {
+                    title: 'Shopping & Local Bazaar',
+                    subtitle: 'Day 4',
+                    desc: 'Visit the best shopping destinations and local markets.',
+                    image: '',
+                    activities: [
+                        'Dostyk Plaza',
+                        'Mega Center Mall',
+                        'Green Bazaar (Local Market)'
+                    ]
+                },
+                {
+                    title: 'Farewell & Departure',
+                    subtitle: 'Day 5',
+                    desc: 'Check-out and transfer to the airport for your safe flight home.',
+                    image: '',
+                    activities: [
+                        'Hotel check-out',
+                        'Transfer to Almaty International Airport',
+                        'Safe departure'
+                    ]
+                }
+            ],
+            cancellationPolicy: 'Package includes 3 sightseeing tours + airport pick-up + drop-off. Daily breakfast included. Lunch & dinner not included. Restaurants based on guest preference (Arabic / International / Local).'
         }
     ];
 };
@@ -183,10 +318,13 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 let { data: pkgData, error: pkgError } = await supabase.from('packages').select('*');
                 if (pkgError) throw pkgError;
 
-                // SEED IF EMPTY
-                if (!pkgData || pkgData.length === 0) {
-                    const defaultPackages = seedPackagesFromTranslations();
-                    const rows = defaultPackages.map(p => ({
+                // Sync local packages with DB (Ensures new items appear)
+                const defaultPackages = seedPackagesFromTranslations();
+                const currentPkgIds = new Set((pkgData || []).map((p: any) => p.id));
+                const missingPackages = defaultPackages.filter(p => !currentPkgIds.has(p.id));
+
+                if (missingPackages.length > 0) {
+                    const rows = missingPackages.map(p => ({
                         id: p.id,
                         type: p.type,
                         tier: p.tier,
@@ -202,11 +340,10 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                     }));
 
                     const { error: seedError } = await supabase.from('packages').insert(rows);
-                    if (seedError) throw seedError;
-
-                    // Re-fetch to get what we just inserted (to ensure consistent format)
-                    const { data: refetched } = await supabase.from('packages').select('*');
-                    pkgData = refetched;
+                    if (!seedError) {
+                        const { data: refetched } = await supabase.from('packages').select('*');
+                        pkgData = refetched;
+                    }
                 }
 
                 if (pkgData && pkgData.length > 0) {
@@ -384,6 +521,35 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         }
     };
 
+    const addPackage = async (pkg: Package) => {
+        setPackages(prev => [pkg, ...prev]);
+
+        // Map to DB structure if needed (checking for underscore diffs)
+        const dbPkg = {
+            id: pkg.id,
+            type: pkg.type,
+            tier: pkg.tier,
+            title: pkg.title,
+            subtitle: pkg.subtitle,
+            price: pkg.price,
+            price_label: pkg.priceLabel,
+            image: pkg.image,
+            features: pkg.features,
+            inclusions: pkg.inclusions,
+            itinerary: pkg.itinerary,
+            cancellation_policy: pkg.cancellationPolicy
+        };
+
+        const { error } = await supabase.from('packages').insert([dbPkg]);
+        if (error) { console.error("Error adding package DB:", error); setError(error.message); }
+    };
+
+    const deletePackage = async (id: string) => {
+        setPackages(prev => prev.filter(p => p.id !== id));
+        const { error } = await supabase.from('packages').delete().eq('id', id);
+        if (error) { console.error("Error deleting package DB:", error); setError(error.message); }
+    };
+
     const updateSettings = async (updates: Partial<AppSettings>) => {
         setSettings(prev => ({ ...prev, ...updates }));
 
@@ -419,6 +585,8 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             updateGallery,
             packages,
             updatePackage,
+            addPackage,
+            deletePackage,
             prices,
             updatePrice,
             settings,

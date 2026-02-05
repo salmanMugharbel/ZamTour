@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link, useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '../LanguageContext';
 import { useData } from '../DataContext';
+import ItineraryCard from '../components/ItineraryCard';
 
 const MyPackage: React.FC = () => {
     const { t, isRTL } = useLanguage();
@@ -21,7 +22,7 @@ const MyPackage: React.FC = () => {
         const details = location.state?.inquiryDetails || {};
         const phone = settings.whatsappNumber || "77477577971";
 
-        const msg = `Hello ZamTour! I want to inquire about the ${pkg.title} package.
+        const msg = `Hello ZamTour! I want to inquire about the ${pkgDisplay.title} package.
             
 Details:
 - Country: ${details.country || 'Not specified'}
@@ -35,7 +36,7 @@ Details:
     const handleFindCost = () => {
         // Keep existing logic for fallback or direct use
         const phone = settings.whatsappNumber || "77477577971";
-        const msg = `Hello ZamTour! I want to inquire about the cost of the ${pkg.title} (${pkg.subtitle}) package.`;
+        const msg = `Hello ZamTour! I want to inquire about the cost of the ${pkgDisplay.title} (${pkgDisplay.subtitle}) package.`;
         const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
         window.open(url, '_blank');
         setIsInquiryModalOpen(false);
@@ -43,6 +44,27 @@ Details:
 
     if (!pkg) {
         return <div className="text-white text-center pt-40">Package not found</div>;
+    }
+
+    // MERGE TRANSLATIONS FOR ALMATY PACKAGE
+    let pkgDisplay = pkg;
+    if (pkg.id === 'almaty_luxury_3p') {
+        // @ts-ignore
+        const customData = t.packages?.custom_packages?.pkg1;
+        if (customData) {
+            pkgDisplay = {
+                ...pkg,
+                title: customData.title || pkg.title,
+                subtitle: customData.subtitle || pkg.subtitle,
+                itinerary: pkg.itinerary.map((day, i) => {
+                    // @ts-ignore
+                    const tDay = customData.itinerary?.[i];
+                    return tDay ? { ...day, title: tDay.title, subtitle: tDay.subtitle, desc: tDay.desc } : day;
+                }),
+                // @ts-ignore
+                inclusions: customData.inclusions || pkg.inclusions
+            };
+        }
     }
 
     return (
@@ -85,7 +107,7 @@ Details:
                     <Link to="/packages" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-gold-400 mb-4 transition-colors">
                         <span className={`iconify ${isRTL ? 'rotate-180' : ''}`} data-icon="solar:arrow-left-linear"></span> {t.my_package.back}
                     </Link>
-                    <h1 className="text-3xl md:text-5xl font-bold text-white">{pkg.title} <span className="text-gold-400">{pkg.subtitle}</span></h1>
+                    <h1 className="text-3xl md:text-5xl font-bold text-white">{pkgDisplay.title} <span className="text-gold-400">{pkgDisplay.subtitle}</span></h1>
                 </div>
 
                 {/* 1. PACKAGE SUMMARY CARD */}
@@ -96,7 +118,7 @@ Details:
                             {/* Left: Pricing & Action */}
                             <div className={`w-full md:w-1/4 bg-white/5 p-8 flex flex-col justify-center items-center border-b md:border-b-0 ${isRTL ? 'md:border-l' : 'md:border-r'} border-white/10 text-center`}>
                                 <span className="text-gray-400 text-sm font-semibold uppercase tracking-wider mb-2">{t.my_package.total_price}</span>
-                                <div className="text-4xl font-extrabold text-white mb-6">${pkg.price}</div>
+                                <div className="text-4xl font-extrabold text-white mb-6">${pkgDisplay.price}</div>
                                 <button
                                     onClick={handleBookClick}
                                     className="w-full bg-gold-400 text-[#1B1464] py-3 rounded-xl font-bold hover:bg-white transition-all shadow-lg"
@@ -112,24 +134,32 @@ Details:
                                     <span className="iconify text-gold-400" data-icon="solar:star-bold"></span> {t.my_package.includes_title}
                                 </h3>
                                 <div className="grid grid-cols-2 gap-y-6 gap-x-4">
-                                    {pkg.inclusions.map((inc, i) => {
-                                        // Standard inclusions mapping
-                                        const keys = ['sim', 'tours', 'transfers', 'stay'];
-                                        const icons = [
-                                            'solar:sim-card-bold-duotone',
-                                            'solar:map-point-bold-duotone',
-                                            'solar:taxi-bold-duotone',
-                                            'solar:bed-bold-duotone'
-                                        ];
+                                    {pkgDisplay.inclusions.map((inc, i) => {
+                                        const isStandardPkg = ['coup_std', 'coup_prem', 'fam_std', 'fam_prem', 'fr_std', 'fr_prem', 'solo_std', 'solo_prem'].includes(pkgDisplay.id);
 
-                                        const key = keys[i];
-                                        // @ts-ignore
-                                        const title = t.my_package.includes[key];
-                                        // @ts-ignore
-                                        const desc = t.my_package.includes[`${key}_desc`];
+                                        let title = inc.title;
+                                        let desc = inc.desc;
+                                        let icon = inc.icon;
 
-                                        // Use mapped icon if available, otherwise fallback to data
-                                        const icon = icons[i] || inc.icon;
+                                        if (isStandardPkg) {
+                                            // Standard inclusions mapping
+                                            const keys = ['sim', 'tours', 'transfers', 'stay'];
+                                            const icons = [
+                                                'solar:sim-card-bold-duotone',
+                                                'solar:map-point-bold-duotone',
+                                                'solar:taxi-bold-duotone',
+                                                'solar:bed-bold-duotone'
+                                            ];
+
+                                            const key = keys[i];
+                                            if (key) {
+                                                // @ts-ignore
+                                                title = t.my_package.includes[key] || title;
+                                                // @ts-ignore
+                                                desc = t.my_package.includes[`${key}_desc`] || desc;
+                                                icon = icons[i] || icon;
+                                            }
+                                        }
 
                                         return (
                                             <div key={i} className="flex items-center gap-3">
@@ -137,8 +167,8 @@ Details:
                                                     <span className="iconify w-6 h-6" data-icon={icon}></span>
                                                 </div>
                                                 <div>
-                                                    <p className="text-white font-bold text-sm">{title || inc.title}</p>
-                                                    <p className="text-[10px] text-gray-400">{desc || inc.desc}</p>
+                                                    <p className="text-white font-bold text-sm">{title}</p>
+                                                    <p className="text-[10px] text-gray-400">{desc}</p>
                                                 </div>
                                             </div>
                                         );
@@ -148,7 +178,7 @@ Details:
 
                             {/* Right: Image */}
                             <div className="w-full md:w-1/4 h-48 md:h-auto relative">
-                                <img src={pkg.image} className="w-full h-full object-cover" alt={pkg.title} />
+                                <img src={pkgDisplay.image} className="w-full h-full object-cover" alt={pkgDisplay.title} />
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#1B1464] to-transparent opacity-60"></div>
                             </div>
 
@@ -159,53 +189,42 @@ Details:
                 {/* 2. ITINERARY */}
                 <h2 className={`text-2xl font-bold text-white mb-8 ${isRTL ? 'pr-2' : 'pl-2'} animate-on-scroll`}>{t.my_package.itinerary_title}</h2>
 
-                <div className="space-y-0 relative">
+                <div className="space-y-2 relative">
+                    {pkgDisplay.itinerary.map((day, i) => {
+                        // Only apply generic translations for standard packages
+                        const isStandardPkg = ['coup_std', 'coup_prem', 'fam_std', 'fam_prem', 'fr_std', 'fr_prem', 'solo_std', 'solo_prem'].includes(pkgDisplay.id);
 
-                    {pkg.itinerary.map((day, i) => {
-                        // @ts-ignore
-                        const dayData = t.my_package.days[`day${i + 1}_title`] ? {
+                        let dayData = day;
+                        if (isStandardPkg) {
                             // @ts-ignore
-                            title: t.my_package.days[`day${i + 1}_title`],
+                            const tTitle = t.my_package.days[`day${i + 1}_title`];
                             // @ts-ignore
-                            sub: t.my_package.days[`day${i + 1}_sub`],
+                            const tSub = t.my_package.days[`day${i + 1}_sub`];
                             // @ts-ignore
-                            desc: t.my_package.days[`day${i + 1}_desc`]
-                        } : day;
+                            const tDesc = t.my_package.days[`day${i + 1}_desc`];
+
+                            if (tTitle) {
+                                dayData = {
+                                    ...day,
+                                    title: tTitle,
+                                    subtitle: tSub,
+                                    desc: tDesc
+                                };
+                            }
+                        }
 
                         return (
-                            <div key={i} className={`relative ${isRTL ? 'pr-16' : 'pl-16'} pb-12 group animate-on-scroll`}>
-                                <div className={`absolute ${isRTL ? 'right-6' : 'left-6'} top-10 bottom-[-20px] w-0.5 bg-white/10 z-0`}></div>
-                                <div className={`absolute ${isRTL ? 'right-0' : 'left-0'} top-0 w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white border-4 border-[#1B1464] z-10 shadow-lg`}>
-                                    <span className="iconify w-6 h-6" data-icon="solar:calendar-mark-bold"></span>
-                                </div>
-
-                                <div className="spotlight-wrapper rounded-2xl p-[1px]">
-                                    <div className="spotlight-content rounded-2xl p-6 bg-[#1B1464]/60">
-                                        <div className="flex justify-between items-start mb-2">
-                                            <h3 className="text-lg font-bold text-white">{dayData.title || day.title}</h3>
-                                            <span className="text-xs text-gray-400">{dayData.sub || day.subtitle}</span>
-                                        </div>
-                                        <p className="text-sm text-gray-300 mb-4 leading-relaxed">
-                                            {dayData.desc || day.desc}
-                                        </p>
-                                        <div className="flex gap-4 border-t border-white/10 pt-4 text-xs text-gray-400">
-                                            {day.activities.map((act, j) => {
-                                                const [icon, text] = act.split('|');
-                                                // Ideally translate activities too, but for now just text
-                                                return (
-                                                    <div key={j} className="flex items-center gap-1">
-                                                        {icon && <span className="iconify text-green-400" data-icon={icon}></span>}
-                                                        {text}
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <ItineraryCard
+                                key={i}
+                                dayNumber={i + 1}
+                                title={dayData.title}
+                                subtitle={dayData.subtitle}
+                                description={dayData.desc}
+                                activities={day.activities}
+                                image={day.image || pkgDisplay.image}
+                            />
                         );
                     })}
-
                 </div>
 
             </main>

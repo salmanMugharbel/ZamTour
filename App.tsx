@@ -67,9 +67,12 @@ const AppContent: React.FC = () => {
         };
     }, []);
 
+    const location = useLocation();
+    const isAdminRoute = location.pathname === '/admin';
+
     return (
         <div key={language} className={`flex flex-col min-h-screen relative ${isRTL ? 'font-arabic' : 'font-sans'}`}>
-            <Header />
+            {!isAdminRoute && <Header />}
             <div className="flex-1 w-full">
                 <Routes>
                     <Route path="/" element={<Home />} />
@@ -81,15 +84,35 @@ const AppContent: React.FC = () => {
                     <Route path="/admin" element={<Admin />} />
                 </Routes>
             </div>
-            <Footer />
+            {!isAdminRoute && <Footer />}
         </div>
     );
 };
 
+import Preloader from './components/Preloader';
+
 const App: React.FC = () => {
+    const [loading, setLoading] = React.useState(true);
+
+    useEffect(() => {
+        // Check if user has visited in this session
+        const hasVisited = sessionStorage.getItem('hasVisited');
+        if (hasVisited) {
+            setLoading(false);
+        } else {
+            // Keep loading true to show Preloader
+        }
+    }, []);
+
+    const handlePreloaderComplete = () => {
+        setLoading(false);
+        sessionStorage.setItem('hasVisited', 'true');
+    };
+
     return (
         <LanguageProvider>
             <DataProvider>
+                {loading && <Preloader onComplete={handlePreloaderComplete} />}
                 <Router>
                     <ScrollToTop />
                     <ErrorBoundary>
