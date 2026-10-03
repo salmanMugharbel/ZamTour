@@ -72,7 +72,7 @@ npm install
 #### Create a Supabase Project
 1. Go to [Supabase](https://supabase.com)
 2. Create a new project
-3. Copy your project URL and anon key
+3. Copy your project URL and publishable key
 
 #### Set Up Database Tables
 Run the SQL script in your Supabase SQL Editor:
@@ -84,7 +84,9 @@ Run the SQL script in your Supabase SQL Editor:
 Create a `.env` file in the root directory:
 ```env
 VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
+# Server-side only; never expose this in browser code or a VITE_ variable
+SUPABASE_SECRET_KEY=your_supabase_secret_key
 ```
 
 ### 4. Run Development Server
@@ -147,8 +149,10 @@ ZamTour/
 Make sure to add these in your deployment platform:
 ```
 VITE_SUPABASE_URL
-VITE_SUPABASE_ANON_KEY
+VITE_SUPABASE_PUBLISHABLE_KEY
 ```
+
+Only configure `SUPABASE_SECRET_KEY` in a trusted server-side environment. This app's Vite client cannot safely use the secret key.
 
 ## 📝 License
 
