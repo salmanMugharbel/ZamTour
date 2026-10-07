@@ -283,9 +283,9 @@ const defaultSettings: AppSettings = { whatsappNumber: "77477577971" };
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [destinations, setDestinations] = useState<Destination[]>([]);
-    const [galleries, setGalleries] = useState<{ [key: string]: string[] }>({});
-    const [packages, setPackages] = useState<Package[]>([]);
+    const [destinations, setDestinations] = useState<Destination[]>(DESTINATIONS);
+    const [galleries, setGalleries] = useState<{ [key: string]: string[] }>(PLACE_GALLERIES);
+    const [packages, setPackages] = useState<Package[]>(seedPackagesFromTranslations());
     const [prices, setPrices] = useState<PackagePrices>(defaultPrices);
     const [settings, setSettings] = useState<AppSettings>(defaultSettings);
     const [loading, setLoading] = useState(true);

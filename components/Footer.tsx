@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
                         <svg viewBox="0 0 100 60" fill="none" className="w-8 h-8">
                             <path d="M5 55 L28 32 L38 42 L50 12 L62 42 L72 32 L95 55" stroke="#D4AF37" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                        <span className="text-lg font-bold text-white">ZamTour</span>
+                        <span className="text-lg font-bold text-white">Al-Morshid</span>
                     </div>
                     <p className="text-blue-200 text-sm leading-relaxed pr-0 md:pr-12">
                         “{t.footer.desc}”

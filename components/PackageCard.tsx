@@ -4,6 +4,7 @@ interface PackageCardProps {
     id: string;
     title: string;
     image: string;
+    fallbackImage: string;
     price: number;
     priceLabel: string;
     duration: string;
@@ -15,82 +16,101 @@ const PackageCard: React.FC<PackageCardProps> = ({
     id,
     title,
     image,
+    fallbackImage,
     price,
     priceLabel,
     duration,
     tier,
     onSelect
 }) => {
+    const badgeText = tier === 'premium' ? 'Top pick' : 'Popular';
+    const [isSaved, setIsSaved] = React.useState(false);
+    const [imageSrc, setImageSrc] = React.useState(
+        !image || image.startsWith('https://welcome.shymbulak.com/') ? fallbackImage : image
+    );
+
+    React.useEffect(() => {
+        setImageSrc(!image || image.startsWith('https://welcome.shymbulak.com/') ? fallbackImage : image);
+    }, [image, fallbackImage]);
+
     return (
-        <div className="bg-[#1B1464]/80 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl hover:border-gold-400/50 transition-all duration-300 flex flex-col h-full group">
-            {/* Image Section */}
-            <div className="relative h-56 overflow-hidden">
+        <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-lg border border-slate-200 bg-white transition-shadow duration-200 hover:shadow-lg">
+            <div className="relative aspect-[1.6/1] overflow-hidden bg-slate-100">
                 <img
-                    src={image}
+                    src={imageSrc}
                     alt={title}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                    onError={() => setImageSrc(fallbackImage)}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1B1464] to-transparent opacity-60"></div>
-                <button className="absolute top-3 right-3 text-white/80 hover:text-red-500 transition-colors bg-black/20 p-2 rounded-full backdrop-blur-sm">
-                    <span className="iconify text-xl" data-icon="solar:heart-bold"></span>
+
+                <button
+                    type="button"
+                    onClick={() => setIsSaved(value => !value)}
+                    className="absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-white text-slate-800 shadow-sm transition-colors hover:text-red-500"
+                    aria-label={isSaved ? 'Remove saved package' : 'Save package'}
+                    aria-pressed={isSaved}
+                >
+                    <span className="iconify text-lg" data-icon={isSaved ? 'solar:heart-bold' : 'solar:heart-linear'}></span>
                 </button>
-                {tier === 'premium' && (
-                    <div className="absolute top-3 left-3 bg-gold-400 text-[#1B1464] text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1 shadow-lg">
-                        <span className="iconify" data-icon="solar:crown-star-bold"></span>
-                        PREMIUM
-                    </div>
-                )}
+
+                <div className="absolute left-3 top-3 inline-flex items-center gap-1 rounded bg-[#10223f] px-2.5 py-1 text-xs font-bold text-white shadow-sm">
+                    {badgeText}
+                </div>
             </div>
 
-            {/* Content Section */}
-            <div className="p-5 flex flex-col flex-1 relative">
-                <h3 className="text-white font-bold text-xl leading-tight mb-3 line-clamp-2 min-h-[3.5rem]">
-                    {title}
-                </h3>
-
-                {/* Reviews Placeholder */}
-                <div className="flex items-center gap-2 mb-4">
-                    <div className="flex text-gold-400 text-sm">
-                        <span className="iconify" data-icon="solar:star-bold"></span>
-                        <span className="iconify" data-icon="solar:star-bold"></span>
-                        <span className="iconify" data-icon="solar:star-bold"></span>
-                        <span className="iconify" data-icon="solar:star-bold"></span>
-                        <span className="iconify" data-icon="solar:star-bold"></span>
-                    </div>
-                    <span className="text-gray-400 text-xs">(0 reviews)</span>
+            <div className="flex flex-1 flex-col p-3.5">
+                <div className="mb-1.5 flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-slate-500">
+                    <span>Almaty</span>
+                    <span className="text-slate-300" aria-hidden="true">•</span>
+                    <span>{tier === 'premium' ? 'Premium experience' : 'Flexible booking'}</span>
                 </div>
 
-                <div className="mt-auto border-t border-white/10 pt-4">
-                    <div className="flex items-center justify-between text-gray-300 text-sm mb-3">
-                        <div className="flex items-center gap-2 bg-white/5 px-3 py-1 rounded-lg">
-                            <span className="iconify text-gold-400" data-icon="solar:clock-circle-bold"></span>
-                            <span>{duration}</span>
-                        </div>
-                    </div>
+                <h2 className="min-h-[3rem] text-lg font-bold leading-snug text-slate-900 line-clamp-2">
+                    {title}
+                </h2>
 
-                    <div className="flex items-center justify-between gap-3">
+                <div className="mt-2 flex items-center gap-1.5">
+                    <div className="flex items-center text-yellow-500">
+                        <span className="iconify text-sm" data-icon="solar:star-bold"></span>
+                    </div>
+                    <span className="text-sm font-semibold text-slate-800">4.9</span>
+                    <span className="text-sm text-slate-500">(2,371)</span>
+                </div>
+
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">
+                        <span className="iconify text-[12px] text-[#1B1464]" data-icon="solar:clock-circle-bold"></span>
+                        {duration}
+                    </span>
+                    <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-700">
+                        <span className="iconify text-[12px] text-[#1B1464]" data-icon="solar:map-arrow-bold"></span>
+                        Pickup available
+                    </span>
+                </div>
+
+                <div className="mt-auto pt-3">
+                    <div className="flex items-end justify-between gap-2 border-t border-slate-200 pt-3">
                         <div className="flex flex-col">
-                            <span className="text-[10px] uppercase tracking-wider text-gray-400">Starting from</span>
-                            <div className="flex items-baseline gap-1">
-                                <span className="text-xl font-bold text-gold-400">${price}</span>
-                                <span className="text-xs text-gray-400">{priceLabel}</span>
+                            <span className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">
+                                From
+                            </span>
+                            <div className="flex items-baseline gap-1.5">
+                                <span className="text-2xl font-extrabold text-[#1B1464]">${price}</span>
+                                <span className="text-xs text-slate-500">{priceLabel}</span>
                             </div>
                         </div>
+
                         <button
+                            type="button"
                             onClick={() => onSelect(id)}
-                            className={`
-                                px-6 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 shadow-lg
-                                ${tier === 'premium'
-                                    ? 'bg-gold-400 text-[#1B1464] hover:bg-white hover:scale-105'
-                                    : 'bg-white/10 text-white hover:bg-gold-400 hover:text-[#1B1464]'}
-                            `}
+                            className="rounded-md bg-[#1B1464] px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-[#2f2a7a]"
                         >
                             Select
                         </button>
                     </div>
                 </div>
             </div>
-        </div>
+        </article>
     );
 };
 

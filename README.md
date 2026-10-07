@@ -1,8 +1,8 @@
-# 🌍 ZamTour - Kazakhstan Luxury Travel Platform
+# 🌍 Al-Morshid - Kazakhstan Luxury Travel Platform
 
 A premium, multilingual travel website showcasing the beauty of Kazakhstan with an intuitive admin panel for content management.
 
-![ZamTour](https://img.shields.io/badge/Status-Active-success) ![React](https://img.shields.io/badge/React-19.2.1-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5.8.2-blue) ![Supabase](https://img.shields.io/badge/Supabase-Integrated-green)
+![Al-Morshid](https://img.shields.io/badge/Status-Active-success) ![React](https://img.shields.io/badge/React-19.2.1-blue) ![TypeScript](https://img.shields.io/badge/TypeScript-5.8.2-blue) ![Supabase](https://img.shields.io/badge/Supabase-Integrated-green)
 
 ## ✨ Features
 
@@ -58,8 +58,8 @@ A premium, multilingual travel website showcasing the beauty of Kazakhstan with 
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/salmanMugharbel/ZamTour.git
-cd ZamTour
+git clone https://github.com/salmanMugharbel/Al-Morshid.git
+cd Al-Morshid
 ```
 
 ### 2. Install Dependencies
@@ -106,7 +106,7 @@ npm run preview
 ## 📁 Project Structure
 
 ```
-ZamTour/
+Al-Morshid/
 ├── components/          # Reusable UI components
 │   ├── Header.tsx      # Navigation header
 │   └── Footer.tsx      # Site footer

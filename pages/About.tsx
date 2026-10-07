@@ -19,7 +19,7 @@ const About: React.FC = () => {
             <section className="relative h-[60vh] flex flex-col justify-center items-center overflow-hidden w-full">
                 <div className="absolute inset-0 z-0">
                     <img src="https://images.unsplash.com/photo-1528543606781-2f6e6857f318?q=80&w=2070&auto=format&fit=crop" 
-                         alt="ZamTour Team" 
+                         alt="Al-Morshid Team"
                          className="w-full h-full object-cover" />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#1B1464] via-[#1B1464]/60 to-[#1B1464]/30"></div>
                 </div>

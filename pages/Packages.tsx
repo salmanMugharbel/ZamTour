@@ -10,6 +10,8 @@ const Packages: React.FC = () => {
     const location = useLocation();
     const { t } = useLanguage();
     const { packages } = useData();
+    const [activeType, setActiveType] = React.useState<'all' | 'couples' | 'family' | 'friends' | 'solo'>('all');
+    const [premiumOnly, setPremiumOnly] = React.useState(false);
 
     // Check if we are in inquiry mode
     const isInquiryMode = location.state?.inquiryMode;
@@ -24,87 +26,102 @@ const Packages: React.FC = () => {
         });
     };
 
-    // Group packages by type to maintain layout structure
-    const couplesPackages = packages.filter(p => p.type === 'couples');
-    const familyPackages = packages.filter(p => p.type === 'family');
-    const friendsPackages = packages.filter(p => p.type === 'friends');
-
-    const renderPackageSection = (title: string, icon: string, iconColorClass: string, items: typeof packages) => {
-        if (items.length === 0) return null;
-
-        return (
-            <section className="mb-16 animate-on-scroll">
-                <div className="flex items-center gap-3 mb-8 px-2">
-                    {/* <div className={`w-10 h-10 rounded-full flex items-center justify-center ${iconColorClass.replace('text-', 'bg-').replace('400', '500/10')} ${iconColorClass}`}>
-                        <span className="iconify w-5 h-5" data-icon={icon}></span>
-                    </div> */}
-                    <h2 className="text-2xl md:text-3xl font-bold text-[#1B1464]">{title}</h2>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {items.map((pkg) => {
-                        // Resolve dynamic translation for title
-                        // @ts-ignore
-                        const translatedTitle = t.packages[`${pkg.type}_${pkg.tier === 'premium' ? 'prem_' : ''}title`] || pkg.title;
-
-                        // Determine duration text (using subtitle as it often contains duration, or fallback)
-                        // The existing subtitles in translations are like "Standard", "Premium", "7 Days" etc.
-                        // We might need a better source for duration if it's not consistent. 
-                        // For custom packages, it's correct. For standard ones, let's use a generic string or mapped value if available.
-                        // But for now, we'll try to use the subtitle if it looks like a duration, or fallback to the itinerary length.
-                        const duration = pkg.subtitle.includes('Days') ? pkg.subtitle : `${pkg.itinerary?.length || 5} Days`;
-
-                        return (
-                            <PackageCard
-                                key={pkg.id}
-                                id={pkg.id}
-                                title={translatedTitle}
-                                image={pkg.image}
-                                price={pkg.price}
-                                priceLabel={pkg.priceLabel}
-                                duration={duration}
-                                tier={pkg.tier}
-                                onSelect={handleSelect}
-                            />
-                        );
-                    })}
-                </div>
-            </section>
-        );
+    const typeFilters = [
+        { id: 'all', label: t.packages.all_packages },
+        { id: 'couples', label: t.packages.couples },
+        { id: 'family', label: t.packages.family },
+        { id: 'friends', label: t.packages.friends },
+        ...(packages.some(pkg => pkg.type === 'solo') ? [{ id: 'solo', label: t.packages.solo }] : [])
+    ] as const;
+    const filteredPackages = packages.filter(pkg =>
+        (activeType === 'all' || pkg.type === activeType) && (!premiumOnly || pkg.tier === 'premium')
+    );
+    const fallbackImages = {
+        couples: '/images/kolsai-lake/image-1.jpg',
+        family: '/images/shymbulak-mountains/image-1.jpg',
+        friends: '/images/shymbulak-mountains/image-1.jpg',
+        solo: '/images/almarasan-gorge/image-1.jpg'
     };
 
     return (
-        <div className="w-full">
-            {/* Hero Section - Reduced height for better flow */}
-            <section className="relative h-[40vh] md:h-[50vh] flex flex-col justify-center items-center overflow-hidden">
-                <div className="absolute inset-0 z-0">
-                    <img src="https://welcome.shymbulak.com/wp-content/uploads/2024/11/cb8654049f3cbf379a15e6b31a8d0aab-scaled.jpg"
-                        alt="Shymbulak Packages"
-                        className="w-full h-full object-cover object-center" />
-                    <div className="absolute inset-0 bg-black/40"></div>
-                </div>
-
-                <div className="text-center z-10 max-w-4xl px-4 mt-10 animate-on-scroll">
-                    <h1 className="text-3xl md:text-6xl font-extrabold text-white mb-4 drop-shadow-xl">
-                        {t.packages.title} <span className="text-gold-400">{t.packages.title_highlight}</span>
-                    </h1>
-                    <p className="text-gray-100 text-lg md:text-xl max-w-2xl mx-auto font-medium">
-                        {t.packages.subtitle}
-                    </p>
-                </div>
-            </section>
-
+        <div className="w-full bg-white text-slate-900">
             {/* Inquiry Mode Banner */}
             {isInquiryMode && (
-                <div className="bg-gold-400 text-[#1B1464] py-3 px-4 text-center font-bold sticky top-16 z-40 shadow-md">
+                <div className="bg-gold-400 text-[#1B1464] py-3 px-4 text-center font-bold">
                     Please complete choosing your package to proceed with your inquiry.
                 </div>
             )}
 
-            <main className="py-16 px-4 md:px-8 max-w-7xl mx-auto">
-                {renderPackageSection(t.packages.couples, "solar:heart-angle-bold-duotone", "text-pink-500", couplesPackages)}
-                {renderPackageSection(t.packages.family, "solar:users-group-rounded-bold-duotone", "text-green-500", familyPackages)}
-                {renderPackageSection(t.packages.friends, "solar:glass-cheers-bold-duotone", "text-blue-500", friendsPackages)}
+            <main className="mx-auto max-w-[1440px] px-4 pb-12 pt-7 md:px-8">
+                <div className="mb-5 flex flex-col gap-1">
+                    <h1 className="text-2xl font-bold text-slate-900 md:text-3xl">
+                        {t.packages.title} {t.packages.title_highlight}
+                    </h1>
+                    <p className="max-w-3xl text-sm text-slate-600 md:text-base">{t.packages.subtitle}</p>
+                </div>
+
+                <div className="mb-5 flex items-center gap-2 overflow-x-auto border-b border-slate-200 pb-3" role="group" aria-label="Filter packages by traveler type">
+                    {typeFilters.map(filter => (
+                        <button
+                            key={filter.id}
+                            type="button"
+                            onClick={() => setActiveType(filter.id)}
+                            aria-pressed={activeType === filter.id}
+                            className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors ${activeType === filter.id ? 'bg-[#1B1464] text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+                        >
+                            {filter.label}
+                        </button>
+                    ))}
+                    <span className="mx-1 h-7 w-px shrink-0 bg-slate-200" aria-hidden="true" />
+                    <button
+                        type="button"
+                        onClick={() => setPremiumOnly(value => !value)}
+                        aria-pressed={premiumOnly}
+                        className={`shrink-0 rounded-full px-4 py-2 text-sm font-semibold transition-colors ${premiumOnly ? 'bg-[#1B1464] text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+                    >
+                        {t.packages.premium}
+                    </button>
+                </div>
+
+                <div className="mb-4 flex items-center justify-between text-sm text-slate-600" aria-live="polite">
+                    <p className="font-semibold text-slate-900">{t.packages.package_count.replace('{count}', String(filteredPackages.length))}</p>
+                    {(activeType !== 'all' || premiumOnly) && (
+                        <button
+                            type="button"
+                            onClick={() => { setActiveType('all'); setPremiumOnly(false); }}
+                            className="font-semibold text-[#1B1464] underline underline-offset-4"
+                        >
+                            {t.packages.clear_filters}
+                        </button>
+                    )}
+                </div>
+
+                {filteredPackages.length > 0 ? (
+                    <div className="grid grid-cols-1 gap-x-5 gap-y-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        {filteredPackages.map(pkg => {
+                            // @ts-ignore
+                            const translatedTitle = t.packages[`${pkg.type}_${pkg.tier === 'premium' ? 'prem_' : ''}title`] || pkg.title;
+                            const duration = pkg.subtitle.includes('Days') ? pkg.subtitle : `${pkg.itinerary?.length || 5} Days`;
+
+                            return (
+                                <PackageCard
+                                    key={pkg.id}
+                                    id={pkg.id}
+                                    title={translatedTitle}
+                                    image={pkg.image}
+                                    fallbackImage={fallbackImages[pkg.type] || fallbackImages.couples}
+                                    price={pkg.price}
+                                    priceLabel={pkg.priceLabel}
+                                    duration={duration}
+                                    tier={pkg.tier}
+                                    onSelect={handleSelect}
+                                />
+                            );
+                        })}
+                    </div>
+                ) : (
+                    <p className="py-16 text-center text-slate-600">{t.packages.no_filter_results}</p>
+                )}
             </main>
         </div>
     );

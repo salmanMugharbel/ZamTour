@@ -67,7 +67,7 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
 
             {/* Text Animation */}
             <h1 className={`mt-8 text-4xl md:text-6xl font-extrabold text-white tracking-wider transform transition-all duration-1000 ${startFill ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-                Zam<span className="text-gold-400">Tour</span>
+                Al-Morshid
             </h1>
 
             <style>{`
